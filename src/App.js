@@ -1,47 +1,45 @@
-import _ from 'lodash'
 import React, { Component, Fragment } from 'react'
-import { Grid, Segment, Rail, Sticky, Item } from 'semantic-ui-react'
+import { Grid, Item } from 'semantic-ui-react'
 import NavBar from './components/NavBar'
+import ModelList from './components/ModelList'
 
+import appSyncConfig from "./AppSync";
+import { ApolloProvider } from "react-apollo";
+import AWSAppSyncClient from "aws-appsync";
+import { Rehydrated } from "aws-appsync-react";
 
-class App extends Component {
-  state = {}
-  handleContextRef = contextRef => this.setState({ contextRef })
+const App = () => (
+    <Fragment>
+      <NavBar></NavBar>
+      <Grid columns={2} divided>
+        <Grid.Column>
+          <ModelList></ModelList>
+        </Grid.Column>
+        <Grid.Column>
+          <Item.Header as='a'>Followup Article</Item.Header>
+          <Item.Meta>By Author</Item.Meta>
+        </Grid.Column>
+      </Grid>
+    </Fragment>
+  )
 
-  render() {
-    const { contextRef } = this.state
-    return (
-      <Fragment>
-        <NavBar></NavBar>
-        <Grid columns={2} divided>
-          <Grid.Column>
-            <div ref={this.handleContextRef}>
-              <Segment>
-                <Item.Group divided>
-                  {_.times(18, i => (
-                    <Item key={i}>
-                      <Item.Content>
-                        <Item.Header as='a'>Followup Article</Item.Header>
-                        <Item.Meta>By Author</Item.Meta>
-                      </Item.Content>
-                    </Item>
-                  ))}
-                </Item.Group>
-              </Segment>
-            </div>
-          </Grid.Column>
-          <Grid.Column>
-            <Rail position='right'>
-              <Sticky context={contextRef} scrollContext={window} offset={54} >
-                <Item.Header as='a'>Followup Article</Item.Header>
-                <Item.Meta>By Author</Item.Meta>
-              </Sticky>
-            </Rail>
-          </Grid.Column>
-        </Grid>
-      </Fragment>
-    );
+const client = new AWSAppSyncClient({
+  url: appSyncConfig.graphqlEndpoint,
+  region: appSyncConfig.region,
+  auth: {
+    type: appSyncConfig.authenticationType,
+    apiKey: appSyncConfig.apiKey,
   }
-}
+})
 
-export default App;
+const WithProvider = () => (
+  <ApolloProvider client={client}>
+    <Rehydrated>
+      <App />
+    </Rehydrated>
+  </ApolloProvider>
+)
+
+export default WithProvider
+
+// export default App;
