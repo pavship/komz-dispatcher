@@ -1,28 +1,67 @@
 import _ from 'lodash'
 import React, {Component} from 'react'
-import { graphql, compose } from "react-apollo"
-import { Item } from 'semantic-ui-react'
-// import { Query } from 'react-apollo'
-import queryAllModels from '../graphql/queryAllModels'
+import { Accordion, Segment, Icon, Label, Header } from 'semantic-ui-react'
+import ProdList from './ProdList'
 
-const ModelList = ({queryAllModels: { loading, networkStatus, error, allModels }}) => {
-    if (loading) return <div>Загрузка...</div>
-    if (error) return <div>Ошибка получения данных.</div>
+// const ModelList = ({ deptModels }) => (
+//   <Item.Group divided>
+//    {deptModels.map(deptModel => <Item.Header key={deptModel.model.article}>{deptModel.model.name}</Item.Header>)}
+//   </Item.Group>
+// )
+
+class ModelList extends Component {
+
+  state = { activeIndex: [] }
+
+  handleClick = (e, titleProps) => {
+    const { index } = titleProps
+    const { activeIndex } = this.state
+    const newIndex = _.includes(activeIndex, index) ? _.without(activeIndex, index) : [...activeIndex, index]
+
+    this.setState({ activeIndex: newIndex })
+  }
+
+  render() {
+
+    const { activeIndex } = this.state
+
+    const deptModels = this.props.deptModels.map((deptModel, i) => {
+      const allProdsCount = deptModel.prods.length
+
+      const active = _.includes(activeIndex, i)
+
+      return (
+        <div key={deptModel.id} >
+          <Accordion.Title
+            active={active}
+            index={i}
+            onClick={this.handleClick}
+          >
+            <Icon name='dropdown' />
+            <Header size='small' as='span'>{deptModel.model.name}
+              <Label color='grey'>
+                {allProdsCount}
+                {/* <Label.Detail>шт</Label.Detail> */}
+              </Label>
+            </Header>
+          </Accordion.Title>
+          { active &&
+            <Accordion.Content active>
+              {/* {'deptModel.prods here'} */}
+              {/* <ProdList prods={deptModel.prods} selectProd={this.props.selectProd}/> */}
+              <ProdList prods={deptModel.prods} />
+            </Accordion.Content>
+          }
+        </div>
+      )
+    })
+
     return (
-      <Item.Group divided>
-       {allModels.map(model => <Item.Header key={model.article}>{model.name}</Item.Header>)}
-      </Item.Group>
+      <Accordion>
+        {deptModels}
+      </Accordion>
     )
+  }
 }
 
-export default compose(
-    graphql(
-        queryAllModels,
-        {
-            name: 'queryAllModels',
-            options: {
-                fetchPolicy: 'cache-and-network',
-            }
-        }
-    )
-)(ModelList);
+export default ModelList
