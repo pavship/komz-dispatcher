@@ -27,7 +27,7 @@ class ModelList extends Component {
 
     const deptModels = this.props.deptModels.map((deptModel, i) => {
       const allProdsCount = deptModel.prods.length
-
+      const { name, article } = deptModel.model
       const active = _.includes(activeIndex, i)
 
       return (
@@ -38,11 +38,14 @@ class ModelList extends Component {
             onClick={this.handleClick}
           >
             <Icon name='dropdown' />
-            <Header size='small' as='span'>{deptModel.model.name}
+            {/* <Header size='small' as='span'>{deptModel.model.name} */}
+            <Header size='small' as='span'>{_.first( name.split(' ') )} {article}
               <Label color='grey'>
                 {allProdsCount}
                 {/* <Label.Detail>шт</Label.Detail> */}
               </Label>
+              {/* <Label circular color='grey' empty /> */}
+              {/* <Label circular color='grey' >1</Label> */}
             </Header>
           </Accordion.Title>
           { active &&

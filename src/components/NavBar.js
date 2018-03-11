@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Menu, Icon } from 'semantic-ui-react'
+import { Menu, Icon, Label } from 'semantic-ui-react'
 
 export default class NavBar extends Component {
   state = { activeItem: 'home' }
@@ -8,9 +8,15 @@ export default class NavBar extends Component {
 
   render() {
     const { activeItem } = this.state
-
+    const { toggleSidebar } = this.props
     return (
-      <Menu icon inverted>
+      <Menu icon inverted className='komz-navbar'>
+        <Menu.Menu>
+          <Menu.Item name='bars' onClick={toggleSidebar}>
+            В работе
+            <Label color='grey'>0</Label>
+          </Menu.Item>
+        </Menu.Menu>
         <Menu.Menu position='right'>
           <Menu.Item name='Савенков В.'/>
           <Menu.Item name='sign out' onClick={this.handleItemClick}>
