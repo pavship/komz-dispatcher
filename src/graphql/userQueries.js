@@ -1,9 +1,10 @@
 import gql from "graphql-tag";
 
-export const currentUserQuery = gql`
-  query currentUserQuery {
+export const currentUser = gql`
+  query currentUser {
     currentUser {
       name
+      isDisp
     }
   }
 `

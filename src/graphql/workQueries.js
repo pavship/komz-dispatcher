@@ -7,3 +7,13 @@ export const createWork = gql(`
     }
   }
 `)
+
+export const allWorks = gql`
+  query allWorks {
+    allWorks {
+      id
+      start
+      end
+    }
+  }
+`

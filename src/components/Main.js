@@ -5,19 +5,25 @@ import { graphql, compose } from "react-apollo"
 import { Sidebar, Segment, Card } from 'semantic-ui-react'
 import NavBar from './NavBar'
 import ExecView from './ExecView'
+import DispView from './DispView'
 
-import { currentUserQuery } from '../graphql/userQueries'
+import { currentUser } from '../graphql/userQueries'
 
 class Main extends Component {
   state = { leftSidebarVisible: false }
   toggleSidebar = () => this.setState({ leftSidebarVisible: !this.state.leftSidebarVisible })
   render() {
     const { leftSidebarVisible } = this.state
-    const { user } = this.props
+    const { currentUser: { loading, error, currentUser } } = this.props
     return (
       <Fragment>
-        <NavBar user={user} toggleSidebar={this.toggleSidebar}/>
-        <ExecView sidebarVisible={leftSidebarVisible} />
+        <NavBar user={currentUser} toggleSidebar={this.toggleSidebar}/>
+        { loading ? 'Загрузка' :
+          error ? 'Ошибка' :
+          currentUser.isDisp ?
+          <DispView /> :
+          <ExecView sidebarVisible={leftSidebarVisible} />
+        }
       </Fragment>
     )
   }
@@ -26,12 +32,13 @@ class Main extends Component {
 // export default Main
 export default compose(
     graphql(
-        currentUserQuery,
+        currentUser,
         {
-            props: ({ data }) => ({
-              user: data.currentUser,
-              loading: data.loading
-            }),
+            // props: ({ data }) => ({
+            //   user: data.currentUser,
+            //   loading: data.loading
+            // }),
+            name: 'currentUser',
             options: {
                 fetchPolicy: 'cache-and-network',
             }

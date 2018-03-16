@@ -14,10 +14,12 @@ export default class NavBar extends Component {
     return (
       <Menu icon inverted className='komz-navbar'>
         <Menu.Menu>
-          <Menu.Item name='bars' onClick={toggleSidebar}>
-            В работе
-            <Label color='grey'>0</Label>
-          </Menu.Item>
+          { user.isDisp ? null :
+            <Menu.Item name='bars' onClick={toggleSidebar}>
+              В работе
+              <Label color='grey'>0</Label>
+            </Menu.Item>
+          }
         </Menu.Menu>
         <Menu.Menu position='right'>
           <Menu.Item name={user && user.name} />
