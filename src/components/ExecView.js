@@ -7,12 +7,11 @@ import ModelList from './ModelList'
 import deptModelsQuery from '../graphql/deptModelsQuery'
 
 class ExecView extends Component {
-  toggleSidebar = () => this.setState({ visible: !this.state.visible })
   render() {
-    const { leftSidebarVisible, deptModelsQuery: { loading, networkStatus, error, deptModels } } = this.props
+    const { sidebarVisible, deptModelsQuery: { loading, networkStatus, error, deptModels } } = this.props
     return (
         <Sidebar.Pushable as={Segment} className='komz-pushable'>
-          <Sidebar as={Card} animation='overlay' visible={leftSidebarVisible} className='komz-sidebar'>
+          <Sidebar as={Card} animation='overlay' visible={sidebarVisible} className='komz-sidebar'>
             {
               (loading) ? <div>Загрузка...</div> :
               (error) ? <div>Ошибка получения данных.</div> :

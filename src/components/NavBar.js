@@ -1,11 +1,13 @@
 import React, {Component} from 'react'
+import {Auth} from "aws-amplify"
 import { Menu, Icon, Label } from 'semantic-ui-react'
 
 export default class NavBar extends Component {
   state = { activeItem: 'home' }
-
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
-
+  signOut = () => {
+    Auth.signOut()
+    window.location.reload()
+  }
   render() {
     const { activeItem } = this.state
     const { user, toggleSidebar } = this.props
@@ -19,7 +21,7 @@ export default class NavBar extends Component {
         </Menu.Menu>
         <Menu.Menu position='right'>
           <Menu.Item name={user.name} />
-          <Menu.Item name='sign out' onClick={this.handleItemClick}>
+          <Menu.Item name='sign out' onClick={this.signOut}>
             <Icon name='sign out' />
           </Menu.Item>
         </Menu.Menu>

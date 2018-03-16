@@ -7,7 +7,7 @@ import appSyncConfig from "./AppSync"
 import { ApolloProvider } from "react-apollo"
 import AWSAppSyncClient from "aws-appsync"
 import { Rehydrated } from "aws-appsync-react"
-import Amplify, {Auth} from "aws-amplify"
+import Amplify, {I18n, Auth} from "aws-amplify"
 import { withAuthenticator } from "aws-amplify-react"
 
 const App = () => {
@@ -17,6 +17,18 @@ const App = () => {
     </Fragment>
   )
 }
+
+I18n.putVocabularies({
+  'ru': {
+    'Sign In Account': "Войдите в систему",
+    'Username': "Логин",
+    'Password': "Пароль",
+    'Sign In': "Вход",
+    'Username cannot be empty': "Имя пользователя не может быть пустым"
+  }
+})
+
+I18n.setLanguage('ru')
 
 Amplify.configure({
   Auth: {
@@ -41,14 +53,14 @@ const client = new AWSAppSyncClient({
   }
 })
 
-const WithProvider = ({ authState, authData: {username} }) => (
+const WithProvider = () => (
   <ApolloProvider client={client}>
     <Rehydrated>
-      <App authState={authState} username={username}/>
+      <App />
     </Rehydrated>
   </ApolloProvider>
 )
 
-export default withAuthenticator(WithProvider, { includeGreetings: true } )
+export default withAuthenticator(WithProvider, false )
 
 // export default App;

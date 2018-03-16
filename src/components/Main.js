@@ -17,7 +17,7 @@ class Main extends Component {
     return (
       <Fragment>
         <NavBar user={user} toggleSidebar={this.toggleSidebar}/>
-        <ExecView leftSidebarVisible={leftSidebarVisible} />
+        <ExecView sidebarVisible={leftSidebarVisible} />
       </Fragment>
     )
   }

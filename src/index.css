@@ -8,15 +8,22 @@ body {
   width: 300px !important;
 }
 
+.amplify-section-header {
+  background-color: #1b1c1d !important
+}
+
+.amplify-button:hover {
+  background-color: rgb(204, 204, 204) !important
+}
+
 .amplify-error-section {
   margin: auto;
 }
 
-/* .amplify-section-footer {
+.amplify-section-footer {
   visibility: hidden;
-} */
+}
 
-/* .amplify-form-section { */
 .amplify-form-container, .amplify-form-section {
   height: 208px;
 }
