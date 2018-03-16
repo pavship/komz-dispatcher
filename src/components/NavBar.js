@@ -8,7 +8,7 @@ export default class NavBar extends Component {
 
   render() {
     const { activeItem } = this.state
-    const { toggleSidebar } = this.props
+    const { user, toggleSidebar } = this.props
     return (
       <Menu icon inverted className='komz-navbar'>
         <Menu.Menu>
@@ -18,7 +18,7 @@ export default class NavBar extends Component {
           </Menu.Item>
         </Menu.Menu>
         <Menu.Menu position='right'>
-          <Menu.Item name='Савенков В.'/>
+          <Menu.Item name={user.name} />
           <Menu.Item name='sign out' onClick={this.handleItemClick}>
             <Icon name='sign out' />
           </Menu.Item>

@@ -1,65 +1,37 @@
 import React, { Component, Fragment } from 'react'
 import { graphql, compose } from "react-apollo"
 // import { Query } from 'react-apollo'
-import { Grid, Item, Sidebar, Segment, Menu, Icon, Card } from 'semantic-ui-react'
-import deptModelsQuery from '../graphql/deptModelsQuery'
 
+import { Sidebar, Segment, Card } from 'semantic-ui-react'
 import NavBar from './NavBar'
-import ModelList from './ModelList'
+import ExecView from './ExecView'
 
-// const Main = ({deptModelsQuery: { loading, networkStatus, error, deptModels }}) => (
-//     <Fragment>
-//       <NavBar></NavBar>
-//       <Grid columns={2} divided>
-//         <Grid.Column>
-          // {
-          //   (loading) ? <div>Загрузка...</div> :
-          //   (error) ? <div>Ошибка получения данных.</div> :
-          //   <ModelList deptModels={deptModels} />
-          // }
-//         </Grid.Column>
-//         <Grid.Column>
-//           <Item.Header as='a'>Followup Article</Item.Header>
-//           <Item.Meta>By Author</Item.Meta>
-//         </Grid.Column>
-//       </Grid>
-//     </Fragment>
-//   )
+import { currentUserQuery } from '../graphql/userQueries'
+
 class Main extends Component {
-  state = { visible: false }
-  toggleSidebar = () => this.setState({ visible: !this.state.visible })
+  state = { leftSidebarVisible: false }
+  toggleSidebar = () => this.setState({ leftSidebarVisible: !this.state.leftSidebarVisible })
   render() {
-    const { visible } = this.state
-    const { deptModelsQuery: { loading, networkStatus, error, deptModels } } = this.props
+    const { leftSidebarVisible } = this.state
+    const { user } = this.props
     return (
       <Fragment>
-        <NavBar toggleSidebar={this.toggleSidebar}/>
-        <Sidebar.Pushable as={Segment} className='komz-pushable'>
-          <Sidebar as={Card} animation='overlay' visible={visible} className='komz-sidebar'>
-            {
-              (loading) ? <div>Загрузка...</div> :
-              (error) ? <div>Ошибка получения данных.</div> :
-              <ModelList deptModels={deptModels} />
-            }
-          </Sidebar>
-          <Sidebar.Pusher>
-            <Segment basic>
-              <Item.Header as='a'>Followup Article</Item.Header>
-              <Item.Meta>By Author</Item.Meta>
-            </Segment>
-          </Sidebar.Pusher>
-        </Sidebar.Pushable>
+        <NavBar user={user} toggleSidebar={this.toggleSidebar}/>
+        <ExecView leftSidebarVisible={leftSidebarVisible} />
       </Fragment>
     )
   }
 }
-// = ({deptModelsQuery: { loading, networkStatus, error, deptModels }}) =>
 
+// export default Main
 export default compose(
     graphql(
-        deptModelsQuery,
+        currentUserQuery,
         {
-            name: 'deptModelsQuery',
+            props: ({ data }) => ({
+              user: data.currentUser,
+              loading: data.loading
+            }),
             options: {
                 fetchPolicy: 'cache-and-network',
             }
