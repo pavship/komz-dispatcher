@@ -3,6 +3,7 @@ import { graphql, compose } from "react-apollo"
 
 import { Item, Sidebar, Segment, Card } from 'semantic-ui-react'
 import ModelList from './ModelList'
+import ExecControlPanel from './ExecControlPanel'
 
 import deptModelsQuery from '../graphql/deptModelsQuery'
 
@@ -19,10 +20,7 @@ class ExecView extends Component {
             }
           </Sidebar>
           <Sidebar.Pusher>
-            <Segment basic>
-              <Item.Header as='a'>Followup Article</Item.Header>
-              <Item.Meta>By Author</Item.Meta>
-            </Segment>
+            <ExecControlPanel />
           </Sidebar.Pusher>
         </Sidebar.Pushable>
     )

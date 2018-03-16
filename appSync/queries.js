@@ -1,3 +1,18 @@
+mutation createWork {
+ createWork (
+    start: "sidfjsf",
+    end: null
+  ){
+    id
+  }
+}
+query currentUser {
+  currentUser {
+    id
+    name
+    gqDept
+  }
+}
 query User {
   User (id: "33a0db27-51cc-40d7-8835-873c16cb5669") {
     id
