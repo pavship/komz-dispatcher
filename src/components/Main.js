@@ -15,13 +15,13 @@ class Main extends Component {
   render() {
     const { leftSidebarVisible } = this.state
     const { currentUser: { loading, error, currentUser } } = this.props
+    if (loading) return 'Загрузка'
+    if (error) return 'Ошибка'
     return (
       <Fragment>
         <NavBar user={currentUser} toggleSidebar={this.toggleSidebar}/>
-        { loading ? 'Загрузка' :
-          error ? 'Ошибка' :
-          currentUser.isDisp ?
-          <DispView /> :
+        { currentUser.isDisp ?
+          <DispView view='view'/> :
           <ExecView sidebarVisible={leftSidebarVisible} />
         }
       </Fragment>

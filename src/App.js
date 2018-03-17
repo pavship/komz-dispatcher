@@ -23,8 +23,7 @@ I18n.putVocabularies({
     'Sign In Account': "Войдите в систему",
     'Username': "Логин",
     'Password': "Пароль",
-    'Sign In': "Вход",
-    'Username cannot be empty': "Имя пользователя не может быть пустым"
+    'Sign In': "Вход"
   }
 })
 
@@ -41,16 +40,12 @@ Amplify.configure({
 
 const client = new AWSAppSyncClient({
   url: appSyncConfig.graphqlEndpoint,
-  region: appSyncConfig.region,
+  region: 'eu-west-1',
   auth: {
-    // API_KEY
-    // type: "API_KEY",
-    // apiKey: appSyncConfig.apiKey,
-    // IDENTITY User
-    // COGNITO USER POOLS
     type: "AMAZON_COGNITO_USER_POOLS",
     jwtToken: async () => (await Auth.currentSession()).getAccessToken().getJwtToken()
-  }
+  },
+  disableOffline: true
 })
 
 const WithProvider = () => (
