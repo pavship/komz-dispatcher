@@ -2,8 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { graphql, compose } from "react-apollo"
 
 import { Segment, List } from 'semantic-ui-react'
-// import ModelList from './ModelList'
-// import ExecControlPanel from './ExecControlPanel'
+import WorkLine from './WorkLine'
 
 import { allWorks } from '../graphql/workQueries'
 import { newWork } from '../graphql/workQueries'
@@ -18,15 +17,12 @@ class DispView extends Component {
   }
   render() {
     const { allWorks: { loading, error, allWorks } } = this.props
-    console.log(this.props);
     if (loading) return 'Загрузка'
     if (error) return 'Ошибка'
     return (
       <Segment className='komz-segment'>
         <List divided selection size='medium'>
-          {/* {prods.map((prod) => <ProdItem prod={prod} key={prod.id} selectProd={this.props.selectProd}/>)} */}
-          {/* {[].concat(allWorks).map((prod) => <List.Item content={prod.start} key={prod.id} />)} */}
-          {allWorks && allWorks.map((prod) => <List.Item content={prod.start} key={prod.id} />)}
+          <WorkLine works={allWorks} />
         </List>
       </Segment>
     )
