@@ -9,6 +9,7 @@
     "aws-appsync-react": "^1.0.6",
     "dotenv": "^5.0.1",
     "graphql-tag": "^2.8.0",
+    "luxon": "^0.5.8",
     "react": "^16.2.0",
     "react-apollo": "^2.0.4",
     "react-dom": "^16.2.0",

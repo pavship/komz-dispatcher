@@ -30,6 +30,16 @@ export const allWorks = gql`
     }
   }
 `
+export const chartWorks = gql`
+  query chartWorks ( $period: String! ) {
+    chartWorks ( period: $period ) {
+      id
+      start
+      fin
+      time
+    }
+  }
+`
 export const getCurWork = gql`
   query getCurWork {
     getCurWork {

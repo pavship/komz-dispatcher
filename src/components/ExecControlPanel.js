@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { graphql, compose } from "react-apollo"
+import { DateTime } from 'luxon'
 
 import { Container, Segment, Button, Icon, Label } from 'semantic-ui-react'
 
@@ -36,6 +37,7 @@ class ExecControlPanel extends Component {
   // stop = () => clearInterval(this.state.timer)
   createWork = () => {
     const start = new Date()
+    // const start = DateTime.local().startOf('day').toJSDate()
     const { createWork } = this.props
     createWork({ variables: { start } })
     .then((obj) => {

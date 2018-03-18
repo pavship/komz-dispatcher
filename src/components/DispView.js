@@ -5,6 +5,7 @@ import { Segment, List } from 'semantic-ui-react'
 import WorkLine from './WorkLine'
 
 import { allWorks } from '../graphql/workQueries'
+import { chartWorks } from '../graphql/workQueries'
 import { newWork } from '../graphql/workQueries'
 
 class DispView extends Component {
@@ -16,15 +17,19 @@ class DispView extends Component {
       this.subscription()
   }
   render() {
-    const { allWorks: { loading, error, allWorks } } = this.props
+    // const { allWorks: { loading, error, allWorks } } = this.props
+    const { chartWorks: { loading, error, chartWorks } } = this.props
     if (loading) return 'Загрузка'
     if (error) return 'Ошибка'
     return (
-      <Segment className='komz-segment'>
-        <List divided selection size='medium'>
+      <div className='komz-no-margin komz-dispacher-grid'>
+        <div className='komz-chart'>
+          <WorkLine works={chartWorks} />
+        </div>
+        {/* <List divided selection size='medium'>
           <WorkLine works={allWorks} />
-        </List>
-      </Segment>
+        </List> */}
+      </div>
     )
   }
 }
@@ -48,23 +53,29 @@ export default compose(
                     allWorks: [newWork, ...prev.allWorks.filter(work => work.id !== newWork.id)]
                   }
                 }
-                // updateQuery: (prev, { subscriptionData: { data : { newWork } } }) => {
-                //   console.log(prev);
-                //   console.log(newWork);
-                //   const newD = {
-                //     // ...prev,
-                //     allWorks: [newWork, ...prev.allWorks.filter(work => work.id !== newWork.id)]
-                //     // allWorks: {
-                //     //   // ...prev.allWorks,
-                //     //   allWorks: [newWork, ...prev.allWorks.filter(work => work.id !== newWork.id)],
-                //     //   __typename: 'Work'
-                //     // }
-                //   }
-                //   console.log(newD);
-                //   return newD
-                // }
               })
             })
+        }
+    ),
+    graphql(
+        chartWorks,
+        {
+            name: 'chartWorks',
+            options: {
+                fetchPolicy: 'cache-and-network',
+            },
+            // props: props => ({
+            //   // ...props
+            //   allWorks: props.allWorks,
+            //   subscribeToWorks: () => props.allWorks.subscribeToMore({
+            //     document: newWork,
+            //     updateQuery: (prev, { subscriptionData: { data : { newWork } } }) => {
+            //       return {
+            //         allWorks: [newWork, ...prev.allWorks.filter(work => work.id !== newWork.id)]
+            //       }
+            //     }
+            //   })
+            // })
         }
     ),
 )(DispView)
