@@ -1,9 +1,39 @@
+subscription newWork {
+  newWork {
+    id
+    start
+    fin
+    time
+  }
+}
 mutation createWork {
  createWork (
-    start: "sidfjsf",
-    end: null
+    start: "sidfjsf"
   ){
     id
+    start
+    fin
+    time
+  }
+}
+mutation finishWork {
+ finishWork (
+    id: "00416c6c-3e79-48b3-ba3e-358ea381a589",
+  	time: 15,
+    fin: "sdfsdfsfd"
+  ){
+    id
+    start
+    fin
+    time
+  }
+}
+query allWorks {
+  allWorks {
+    id
+    start
+    fin
+    time
   }
 }
 query currentUser {
@@ -25,6 +55,7 @@ query allUsers {
     id
     name
     gqDept
+    isDisp
   }
 }
 query allModels {

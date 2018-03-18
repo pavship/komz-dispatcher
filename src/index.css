@@ -45,6 +45,10 @@ body {
 
 /* KOMZ SPECIFIC */
 
+.komz-no-margin {
+  margin: 0 !important;
+}
+
 .komz-navbar {
   margin-bottom: 0 !important;
 }

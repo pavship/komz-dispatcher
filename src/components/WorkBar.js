@@ -15,7 +15,7 @@ class WorkBar extends Component {
   }
   tick = () => {
     // this.setState({width: new Date().toLocaleString()})
-    let time = Math.round((new Date() - Date.parse(this.props.work.start))/1000, 0)
+    let time = Math.round((new Date() - Date.parse(this.props.work.start))/1000)
     if (time >= 1440) {
       this.stop()
       time = 1440
