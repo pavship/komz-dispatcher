@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import moment from 'moment'
 import { DateTime, Interval } from 'luxon'
 
 class WorkBar extends Component {
@@ -14,21 +13,17 @@ class WorkBar extends Component {
     borderRightWidth: 1
   }
   componentDidMount() {
-    // console.log(DateTime.fromISO(this.props.work.start).toISO(), this.dt.startOf('day').toISO());
-    // console.log(Date.parse(this.props.work.start) < this.dt.startOf('day').ts);
     const { work: { fin } } = this.props
     console.log(this.startsEarler, this.finished, (this.startsEarler && this.finished) ? Math.round(Interval.fromDateTimes(this.dt.startOf('day'), DateTime.fromISO(this.props.work.fin)).length('minute')) : Math.round(this.props.work.time/60));
-    if (!this.finished) this.start()
+    if (!this.finished) {
+      this.tick()
+      this.start()
+    }
   }
-  // componentDidUpdate(prevProps) {
-  //   console.log(this.props);
-  // }
   componentWillUnmount() {
     if (this.timer) this.stop()
   }
   tick = () => {
-    // this.setState({width: new Date().toLocaleString()})
-    // let time = Math.round((new Date() - Date.parse(this.props.work.start))/1000)
     const finishesLater = (this.dt.endOf('day').ts < Date.parse(new Date()))
     let width
     if (finishesLater) {
@@ -41,7 +36,7 @@ class WorkBar extends Component {
     this.setState({ width })
   }
   start = () => {
-    this.timer = setInterval(() => { this.tick() }, 1000)
+    this.timer = setInterval(() => { this.tick() }, 60000)
   }
   stop = () => clearInterval(this.timer)
   render() {
@@ -54,41 +49,5 @@ class WorkBar extends Component {
     )
   }
 }
-//first variant for seconds:
-// class WorkBar extends Component {
-//   state = {
-//     timer: null,
-//     width: 0,
-//     borderLeftWidth: 1,
-//     borderRightWidth: 1
-//   }
-//   componentDidMount() {
-//       this.start()
-//   }
-//   componentWillUnmount() {
-//       if (this.state.timer) this.stop()
-//   }
-//   tick = () => {
-//     // this.setState({width: new Date().toLocaleString()})
-//     let time = Math.round((new Date() - Date.parse(this.props.work.start))/1000)
-//     if (time >= 1440) {
-//       this.stop()
-//       time = 1440
-//       this.setState({borderRightWidth: 0})
-//     }
-//     this.setState({width: time})
-//   }
-//   start = () => {
-//     this.setState({timer: setInterval(() => { this.tick() }, 1000)})
-//   }
-//   stop = () => clearInterval(this.state.timer)
-//   render() {
-//     const { width, borderLeftWidth, borderRightWidth } = this.state
-//     const { work } = this.props
-//     return (
-//       <div className='komz-workbar' style={{width, borderLeftWidth, borderRightWidth}} >({width}), end{work.end}</div>
-//     )
-//   }
-// }
 
 export default WorkBar
