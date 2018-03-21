@@ -24,3 +24,6 @@ yarn-error.log*
 AppSync.js
 
 .env
+
+/colors
+/data

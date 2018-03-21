@@ -53,7 +53,6 @@ export const getCurWork = gql`
 export const newWork = gql`
   subscription newWork {
     newWork {
-      __typename
       id
       start
       fin

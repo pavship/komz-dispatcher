@@ -12,12 +12,12 @@ export default class NavBar extends Component {
     const { activeItem } = this.state
     const { user, toggleSidebar } = this.props
     return (
-      <Menu icon inverted className='komz-navbar'>
+      <Menu icon inverted className='komz-navbar' size='small'>
         <Menu.Menu>
           { user.isDisp ? null :
             <Menu.Item name='bars' onClick={toggleSidebar}>
-              В работе
-              <Label color='grey'>0</Label>
+              Взять в работу
+              {/* <Label color='grey'>0</Label> */}
             </Menu.Item>
           }
         </Menu.Menu>

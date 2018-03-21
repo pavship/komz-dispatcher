@@ -50,6 +50,8 @@ body {
   margin: 0 !important;
 }
 
+/* LAYOUT */
+
 .komz-navbar {
   margin-bottom: 0 !important;
 }
@@ -63,13 +65,10 @@ body {
   width: 180px !important;
 }
 
-.komz-segment {
-  margin-top: 0px !important;
-}
+/* DISPATCHER VIEW */
 
 .komz-dispacher-grid {
   display: grid;
-  overflow-x: scroll;
   grid-template-columns: 20px 360px 1440px 20px;
   grid-template-rows: 20px 40px 300px 50px;
   border: 1px solid rgba(34,36,38,.15);
@@ -120,7 +119,6 @@ body {
   border-left: 1px solid rgba(34, 36, 38, 0.15);
 }
 
-/* WORKBAR */
 .komz-workbar {
   position: absolute;
   height: 40px;
@@ -131,4 +129,120 @@ body {
   border-width: 1px;
   margin-top: 5px;
   box-sizing: border-box;
+}
+
+/* EXECUTOR VIEW */
+.komz-exec-status-bar {
+  margin: 0 0 4px 0 !important;
+  padding: 3px 10px !important;
+  background-color: rgba(0, 0, 0, .1) !important;
+}
+.komz-exec-status-bar>.progress>.bar {
+  min-width: 0 !important;
+}
+.komz-exec-status-bar>.label {
+  height: 19px !important;
+  vertical-align: bottom !important;
+}
+
+.komz-exec-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 160px ;
+  /* border: 1px solid rgba(34,36,38,.15); */
+  /* box-shadow: 0 1px 2px 0 rgba(34,36,38,.15); */
+  grid-template-areas: "col-left col-right";
+}
+
+.komz-exec-col-left {
+  grid-area: col-left;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr ;
+  /* justify-items: center;
+  align-items: center; */
+  /* justify-items: center; */
+  align-items: stretch;
+}
+
+.komz-exec-col-right {
+  grid-area: col-right;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr ;
+  /* justify-items: center;
+  align-items: center; */
+  align-items: stretch;
+}
+
+.komz-exec-button-container {
+  padding: 2px 5px;
+  /* vertical-align: middle; */
+  display: flex;
+  align-items: center;
+}
+
+.komz-exec-button-container.komz-wt-aside {
+  background-color: rgba(255, 179, 99, 0.8);
+}
+.komz-exec-button-container.komz-wt-rest {
+  background-color: rgba(247, 239, 129, 0.8);
+}
+.komz-exec-button-container.komz-wt-danger {
+  background-color: rgba(252, 120, 113, 0.8);
+}
+.komz-exec-button-container.komz-wt-main {
+  background-color: rgba(191, 221, 126, 0.8);
+}
+.komz-exec-button-container.komz-wt-aux {
+  background-color: rgba(102, 158, 214, 0.8);
+}
+
+.komz-exec-button {
+  padding: 4px !important;
+  /* background-color: #4e4d4d !important; */
+  background-color: white !important;
+  color: black !important;
+  border: 1px solid !important;
+}
+
+.komz-wt-aside>.komz-exec-button.active {
+  background-color: rgba(255, 179, 99, 1) !important;
+  padding: 3px !important;
+  border: 2px solid !important;
+}
+.komz-wt-rest>.komz-exec-button.active {
+  background-color: rgba(247, 239, 129, 1) !important;
+  padding: 3px !important;
+  border: 2px solid !important;
+}
+.komz-wt-danger>.komz-exec-button.active {
+  background-color: rgba(252, 120, 113, 1) !important;
+  padding: 3px !important;
+  border: 2px solid !important;
+}
+.komz-wt-main>.komz-exec-button.active {
+  background-color: rgba(191, 221, 126, 1) !important;
+  padding: 3px !important;
+  border: 2px solid !important;
+}
+.komz-wt-aux>.komz-exec-button.active {
+  background-color: rgba(102, 158, 214, 1) !important;
+  padding: 3px !important;
+  border: 2px solid !important;
+}
+.komz-wt-aside {
+  background-color: rgba(255, 179, 99, 1) !important;
+}
+.komz-wt-rest {
+  background-color: rgba(247, 239, 129, 1) !important;
+}
+.komz-wt-danger {
+  background-color: rgba(252, 120, 113, 1) !important;
+}
+.komz-wt-main {
+  background-color: rgba(191, 221, 126, 1) !important;
+}
+.komz-wt-aux {
+  background-color: rgba(102, 158, 214, 1) !important;
 }

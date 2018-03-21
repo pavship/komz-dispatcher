@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { graphql, compose } from "react-apollo"
 import { DateTime } from 'luxon'
 
-import { Container, Segment, Button, Icon, Label } from 'semantic-ui-react'
+import { Container, Segment, Button, Icon, Label, Progress } from 'semantic-ui-react'
 
 import { getCurWork } from '../graphql/workQueries'
 import { createWork } from '../graphql/workQueries'
@@ -60,35 +60,80 @@ class ExecControlPanel extends Component {
     const { time } = this.state
     return (
       <Fragment>
-        {
-          loading ? 'Загрузка' :
-          error ? 'Ошибка' :
-          <Segment basic className='komz-no-margin'>
-            CurWork:  {getCurWork.id}<br/>
-            start: {getCurWork.start}<br/>
-            fin: {getCurWork.fin}
-          </Segment>
-        }
-        <Segment basic className='komz-no-margin'>
-          <Button as='div' labelPosition='right'>
-            <Button primary onClick={this.start}>
-              <Icon name='play' />
-              Play
-            </Button>
-            <Label as='a' basic pointing='left'>{time}</Label>
-          </Button>
+        <Segment basic className='komz-exec-status-bar'>
+          <b>6:00/9:00 | </b>
+          <Label empty circular className='komz-wt-main' />
+          <Label empty circular className='komz-wt-aux' />
+          <Label empty circular className='komz-wt-aside' />
+          <b>5:00/7:45 | </b>
+          <Label empty circular className='komz-wt-rest' />
+          <b>1:00/1:15</b>
+          <Progress percent={66} color='black' active attached='bottom' />
         </Segment>
-        <Segment basic className='komz-no-margin'>
-          <Button as='div' onClick={this.finishWork}>
-            <Icon name='stop' />
-            Stop
-          </Button>
-          <Button as='div' onClick={this.tick}>
-            <Icon name='lightning' />
-            Tick
-          </Button>
-        </Segment>
+        <div className='komz-exec-grid'>
+          <div className='komz-exec-col-left'>
+            <div className='komz-exec-button-container komz-wt-aside'>
+              <Button className='komz-exec-button' fluid size='small'>Побочная активность</Button>
+            </div>
+            <div className='komz-exec-button-container komz-wt-rest'>
+              <Button className='komz-exec-button' fluid size='small'>Отдых/обед</Button>
+            </div>
+             <div className='komz-exec-button-container komz-wt-danger'>
+               <Button className='komz-exec-button' fluid size='small'>Простой</Button>
+             </div>
+             <div className='komz-exec-button-container komz-wt-danger'>
+               <Button className='komz-exec-button' fluid size='small'>SOS</Button>
+             </div>
+          </div>
+          <div className='komz-exec-col-right'>
+            <div className='komz-exec-button-container komz-wt-main'>
+              <Button className='komz-exec-button' fluid size='small'>Фрезерование/Наладка</Button>
+            </div>
+            <div className='komz-exec-button-container komz-wt-main'>
+              <Button className='komz-exec-button' fluid size='small'>Погрузка/Разгрузка</Button>
+            </div>
+            <div className='komz-exec-button-container komz-wt-main'>
+              <Button className='komz-exec-button' fluid size='small'>Консервация/<br />(Рас/У)паковка</Button>
+            </div>
+            <div className='komz-exec-button-container komz-wt-aux'>
+              <Button className='komz-exec-button' fluid size='small'>ТО оборудования</Button>
+            </div>
+            <div className='komz-exec-button-container komz-wt-aux'>
+              <Button className='komz-exec-button' fluid size='small'>Другие вспомогательные</Button>
+            </div>
+          </div>
+        </div>
       </Fragment>
+      // <Fragment>
+      //   {
+      //     loading ? 'Загрузка' :
+      //     error ? 'Ошибка' :
+      //     <Segment basic className='komz-no-margin'>
+      //       CurWork:  {getCurWork.id}<br/>
+      //       start: {getCurWork.start}<br/>
+      //       fin: {getCurWork.fin}
+      //     </Segment>
+      //   }
+      //   <Segment basic className='komz-no-margin'>
+      //     <Button as='div' labelPosition='right'>
+      //       <Button primary onClick={this.start}>
+      //         <Icon name='play' />
+      //         Play
+      //       </Button>
+      //       <Label as='a' basic pointing='left'>{time}</Label>
+      //     </Button>
+      //   </Segment>
+      //   <Segment basic className='komz-no-margin'>
+      //     <Button as='div' onClick={this.finishWork}>
+      //       <Icon name='stop' />
+      //       Stop
+      //     </Button>
+      //     <Button as='div' onClick={this.tick}>
+      //       <Icon name='lightning' />
+      //       Tick
+      //     </Button>
+      //   </Segment>
+      // </Fragment>
     )
   }
 }

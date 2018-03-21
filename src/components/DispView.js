@@ -75,12 +75,13 @@ export default compose(
                 document: newWork,
                 updateQuery: (prev, { subscriptionData: { data : { newWork } } }) => {
                   // only push newWork if it started not earlier than today
+                  console.log('newWork > ', newWork, (Date.parse(newWork.start) > DateTime.local().startOf('day').ts));
                   if (Date.parse(newWork.start) > DateTime.local().startOf('day').ts) {
                     return {
                       chartWorks: [newWork, ...prev.chartWorks.filter(work => work.id !== newWork.id)]
                     }
                   } else {
-                    return prev.chartWorks
+                    return { chartWorks: prev.chartWorks }
                   }
                 }
               })

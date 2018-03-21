@@ -14,10 +14,16 @@ class WorkBar extends Component {
   }
   componentDidMount() {
     const { work: { fin } } = this.props
-    console.log(this.startsEarler, this.finished, (this.startsEarler && this.finished) ? Math.round(Interval.fromDateTimes(this.dt.startOf('day'), DateTime.fromISO(this.props.work.fin)).length('minute')) : Math.round(this.props.work.time/60));
     if (!this.finished) {
       this.tick()
       this.start()
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.work.fin && (this.props.work.fin === null)) {
+      this.stop()
+      const width = Math.round(Interval.fromDateTimes(DateTime.fromISO(this.props.work.start), DateTime.fromISO(nextProps.work.fin)).length('minute'))
+      this.setState({ width })
     }
   }
   componentWillUnmount() {
