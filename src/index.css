@@ -188,7 +188,7 @@ body {
 .komz-exec-button-container.komz-wt-rest {
   background-color: rgba(247, 239, 129, 0.8);
 }
-.komz-exec-button-container.komz-wt-danger {
+.komz-exec-button-container.komz-wt-negative {
   background-color: rgba(252, 120, 113, 0.8);
 }
 .komz-exec-button-container.komz-wt-main {
@@ -216,7 +216,7 @@ body {
   padding: 3px !important;
   border: 2px solid !important;
 }
-.komz-wt-danger>.komz-exec-button.active {
+.komz-wt-negative>.komz-exec-button.active {
   background-color: rgba(252, 120, 113, 1) !important;
   padding: 3px !important;
   border: 2px solid !important;
@@ -237,7 +237,7 @@ body {
 .komz-wt-rest {
   background-color: rgba(247, 239, 129, 1) !important;
 }
-.komz-wt-danger {
+.komz-wt-negative {
   background-color: rgba(252, 120, 113, 1) !important;
 }
 .komz-wt-main {

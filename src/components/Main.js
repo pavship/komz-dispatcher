@@ -22,7 +22,7 @@ class Main extends Component {
         <NavBar user={currentUser} toggleSidebar={this.toggleSidebar}/>
         { currentUser.isDisp ?
           <DispView period='2018-03-18T21:00:00.000Z'/> :
-          <ExecView sidebarVisible={leftSidebarVisible} />
+          <ExecView sidebarVisible={leftSidebarVisible} user={currentUser} />
         }
       </Fragment>
     )

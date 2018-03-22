@@ -1,12 +1,15 @@
 import gql from "graphql-tag";
 
 export const createWork = gql`
-  mutation createWork ( $start: String! ) {
-    createWork ( start: $start ) {
+  mutation createWork ( $start: String! $execName: String! $workType: String! $workSubType: String) {
+    createWork ( start: $start execName: $execName workType: $workType workSubType: $workSubType ) {
       id
+      execName
       start
       fin
       time
+      workType
+      workSubType
     }
   }
 `
@@ -17,6 +20,8 @@ export const finishWork = gql`
       start
       fin
       time
+      workType
+      workSubType
     }
   }
 `
@@ -47,6 +52,9 @@ export const getCurWork = gql`
       start
       fin
       time
+      workType
+      workSubType
+      noRecent
     }
   }
 `

@@ -9,7 +9,7 @@ import deptModelsQuery from '../graphql/deptModelsQuery'
 
 class ExecView extends Component {
   render() {
-    const { sidebarVisible, deptModelsQuery: { loading, networkStatus, error, deptModels } } = this.props
+    const { sidebarVisible, user, deptModelsQuery: { loading, networkStatus, error, deptModels } } = this.props
     return (
         <Sidebar.Pushable as={Segment} className='komz-pushable'>
           <Sidebar as={Card} animation='overlay' visible={sidebarVisible} className='komz-sidebar'>
@@ -20,7 +20,7 @@ class ExecView extends Component {
             }
           </Sidebar>
           <Sidebar.Pusher>
-            <ExecControlPanel />
+            <ExecControlPanel user={user}/>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
     )

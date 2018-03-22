@@ -5,6 +5,7 @@ export const currentUser = gql`
     currentUser {
       name
       isDisp
+      workTypes
     }
   }
 `

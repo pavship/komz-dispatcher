@@ -11,17 +11,17 @@ import { finishWork } from '../graphql/workQueries'
 class ExecControlPanel extends Component {
   state = {
     timer: null,
-    time: 0
+    time: 0,
   }
   timer1
   componentDidMount() {
-      this.timer1 = setInterval(() => {
-        if (this.props.getCurWork && this.props.getCurWork.getCurWork) {
-          const { start, fin } = this.props.getCurWork.getCurWork
-          if (!fin) this.setState({time: Math.round((new Date() - Date.parse(start))/1000)})
-          else this.setState({time: Math.round((Date.parse(fin) - Date.parse(start))/1000)})
-        }
-      }, 1000)
+      // this.timer1 = setInterval(() => {
+      //   if (this.props.getCurWork && this.props.getCurWork.getCurWork) {
+      //     const { start, fin } = this.props.getCurWork.getCurWork
+      //     if (!fin) this.setState({time: Math.round((new Date() - Date.parse(start))/1000)})
+      //     else this.setState({time: Math.round((Date.parse(fin) - Date.parse(start))/1000)})
+      //   }
+      // }, 1000)
   }
   componentWillUnmount() {
       clearInterval(this.timer1)
@@ -35,19 +35,20 @@ class ExecControlPanel extends Component {
     this.createWork()
   }
   // stop = () => clearInterval(this.state.timer)
-  createWork = () => {
+  createWork = (workType, workSubType) => {
+    // console.log('> createWork');
     const start = new Date()
-    // const start = DateTime.local().startOf('day').toJSDate()
-    const { createWork } = this.props
-    createWork({ variables: { start } })
+    const { createWork, user: {name} } = this.props
+    const execName = name
+    createWork({ variables: { start, execName, workType, workSubType } })
     .then((obj) => {
-      console.log(obj)
-      // console.log(this.props.getCurWork);
+      // console.log(obj)
       this.props.getCurWork.refetch()
     })
   }
   finishWork = () => {
     // this.stop()
+    // console.log('> finishWork');
     const { id, start } = this.props.getCurWork.getCurWork
     const fin = new Date()
     const time = Math.round((fin - Date.parse(start))/1000)
@@ -55,9 +56,26 @@ class ExecControlPanel extends Component {
       variables: { id, time, fin }
     })
   }
+  handleWork = (event, e) => {
+    const { getCurWork } = this.props.getCurWork
+    // start work if currently work isn't running
+    if (getCurWork.fin || getCurWork.noRecent) {
+      this.createWork(e.worktype, e.worksubtype)
+    } else {
+      if (e.worktype === getCurWork.workType && (e.worksubtype || null) === getCurWork.workSubType) {
+        this.finishWork()
+      } else {
+        this.finishWork()
+        this.createWork(e.worktype, e.worksubtype)
+      }
+    }
+  }
   render() {
-    const { getCurWork: {loading, error, getCurWork} } = this.props
+    const { getCurWork: {loading, error, getCurWork}, user } = this.props
     const { time } = this.state
+    // const workTypes = ["Слесарная обработка", "Погрузка/Разгрузка", "Консервация/(У/Рас)паковка"]
+    if (loading) return 'Загрузка'
+    if (error) return 'Ошибка загрузки данных'
     return (
       <Fragment>
         <Segment basic className='komz-exec-status-bar'>
@@ -73,33 +91,51 @@ class ExecControlPanel extends Component {
         <div className='komz-exec-grid'>
           <div className='komz-exec-col-left'>
             <div className='komz-exec-button-container komz-wt-aside'>
-              <Button className='komz-exec-button' fluid size='small'>Побочная активность</Button>
+              <Button fluid size='small' className='komz-exec-button'
+                worktype='Побочные' active={!getCurWork.fin && getCurWork.workType === 'Побочные'}
+                onClick={this.handleWork} >Административ- ные/Побочные задачи и работа с этой системой</Button>
             </div>
             <div className='komz-exec-button-container komz-wt-rest'>
-              <Button className='komz-exec-button' fluid size='small'>Отдых/обед</Button>
+              <Button fluid size='small' className='komz-exec-button'
+                worktype='Отдых' active={!getCurWork.fin && getCurWork.workType === 'Отдых'}
+                onClick={this.handleWork} >Отдых/обед</Button>
             </div>
-             <div className='komz-exec-button-container komz-wt-danger'>
-               <Button className='komz-exec-button' fluid size='small'>Простой</Button>
-             </div>
-             <div className='komz-exec-button-container komz-wt-danger'>
-               <Button className='komz-exec-button' fluid size='small'>SOS</Button>
-             </div>
+            <div className='komz-exec-button-container komz-wt-negative'>
+              <Button fluid size='small' className='komz-exec-button'
+                worktype='Негативные' worksubtype='Простой'
+                active={!getCurWork.fin && getCurWork.workType === 'Негативные' && getCurWork.workSubType === 'Простой'}
+                onClick={this.handleWork} >Простой</Button>
+            </div>
+            <div className='komz-exec-button-container komz-wt-negative'>
+              <Button fluid size='small' className='komz-exec-button'
+                worktype='Негативные' worksubtype='Экстренный случай'
+                active={!getCurWork.fin && getCurWork.workType === 'Негативные' && getCurWork.workSubType === 'Экстренный случай'}
+                onClick={this.handleWork} >Экстренный случай</Button>
+            </div>
           </div>
           <div className='komz-exec-col-right'>
-            <div className='komz-exec-button-container komz-wt-main'>
-              <Button className='komz-exec-button' fluid size='small'>Фрезерование/Наладка</Button>
-            </div>
-            <div className='komz-exec-button-container komz-wt-main'>
-              <Button className='komz-exec-button' fluid size='small'>Погрузка/Разгрузка</Button>
-            </div>
-            <div className='komz-exec-button-container komz-wt-main'>
-              <Button className='komz-exec-button' fluid size='small'>Консервация/<br />(Рас/У)паковка</Button>
+            { user.workTypes.map((type, i) => (
+                <div className='komz-exec-button-container komz-wt-main' key={i}>
+                  <Button fluid size='small' className='komz-exec-button'
+                    worktype='Прямые' worksubtype={type}
+                    active={!getCurWork.fin && getCurWork.workType === 'Прямые' && getCurWork.workSubType === type}
+                    onClick={this.handleWork}
+                    >{type}
+                  </Button>
+                </div>
+              ))
+            }
+            <div className='komz-exec-button-container komz-wt-aux'>
+              <Button fluid size='small' className='komz-exec-button'
+                worktype='Косвенные' worksubtype='ТО оборудования'
+                active={!getCurWork.fin && getCurWork.workType === 'Косвенные' && getCurWork.workSubType === 'ТО оборудования'}
+                onClick={this.handleWork} >ТО оборудования</Button>
             </div>
             <div className='komz-exec-button-container komz-wt-aux'>
-              <Button className='komz-exec-button' fluid size='small'>ТО оборудования</Button>
-            </div>
-            <div className='komz-exec-button-container komz-wt-aux'>
-              <Button className='komz-exec-button' fluid size='small'>Другие вспомогательные</Button>
+              <Button fluid size='small' className='komz-exec-button'
+                worktype='Косвенные'
+                active={!getCurWork.fin && getCurWork.workType === 'Косвенные' && !getCurWork.workSubType}
+                onClick={this.handleWork} >Другие вспомогательные</Button>
             </div>
           </div>
         </div>
