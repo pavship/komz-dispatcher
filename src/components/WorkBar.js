@@ -7,6 +7,7 @@ class WorkBar extends Component {
   startsEarler = (Date.parse(this.props.work.start) < this.dt.startOf('day').ts)
   finished = !!this.props.work.fin
   state = {
+    top: this.props.top,
     left: this.startsEarler ? 0 : Math.round(Interval.fromDateTimes(this.dt.startOf('day'), DateTime.fromISO(this.props.work.start)).length('minute')),
     width: (this.startsEarler && this.finished) ? Math.round(Interval.fromDateTimes(this.dt.startOf('day'), DateTime.fromISO(this.props.work.fin)).length('minute')) : Math.round(this.props.work.time/60),
     borderLeftWidth: this.startsEarler ? 0 : 1,
@@ -46,11 +47,16 @@ class WorkBar extends Component {
   }
   stop = () => clearInterval(this.timer)
   render() {
-    const { left, width, borderLeftWidth, borderRightWidth } = this.state
+    const { top, left, width, borderLeftWidth, borderRightWidth } = this.state
     const { work } = this.props
+    const wt = work.workType
+    const workTypeClass = (wt === 'Прямые') ? 'main' :
+                          (wt === 'Косвенные') ? 'aux' :
+                          (wt === 'Побочные') ? 'aside' :
+                          (wt === 'Отдых') ? 'rest' : 'negative'
     return (
-      <div className='komz-workbar'
-        style={{left, width, borderLeftWidth, borderRightWidth}}
+      <div className={`komz-workbar komz-${workTypeClass}`}
+        style={{top, left, width, borderLeftWidth, borderRightWidth}}
       ></div>
     )
   }

@@ -17,6 +17,7 @@ export const finishWork = gql`
   mutation finishWork ( $id: ID!, $time: Int!, $fin: String! ) {
     finishWork ( id: $id, time: $time, fin: $fin ) {
       id
+      execName
       start
       fin
       time
@@ -39,9 +40,12 @@ export const chartWorks = gql`
   query chartWorks ( $period: String! ) {
     chartWorks ( period: $period ) {
       id
+      execName
       start
       fin
       time
+      workType
+      workSubType
     }
   }
 `
@@ -62,9 +66,12 @@ export const newWork = gql`
   subscription newWork {
     newWork {
       id
+      execName
       start
       fin
       time
+      workType
+      workSubType
     }
   }
 `
