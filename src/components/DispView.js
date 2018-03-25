@@ -1,120 +1,31 @@
+import { DateTime } from 'luxon'
 import React, { Component, Fragment } from 'react'
 import { graphql, compose } from "react-apollo"
-import _ from 'lodash'
-import { DateTime } from 'luxon'
 
-import { Segment, List, Header, Label } from 'semantic-ui-react'
-import WorkLine from './WorkLine'
-import ChartScale from './ChartScale'
-
-import { allWorks } from '../graphql/workQueries'
-import { chartWorks } from '../graphql/workQueries'
-import { newWork } from '../graphql/workQueries'
+import Chart from './Chart'
 
 class DispView extends Component {
-  subscription
-  componentDidMount() {
-      this.subscription = this.props.subscribeToWorks()
+  state = {
+    queryFrom: DateTime.local().startOf('day').minus({ days: 1 }).toJSDate(),
+    from: DateTime.local().startOf('day').toJSDate(),
+    to: DateTime.local().endOf('day').toJSDate()
   }
-  componentWillUnmount() {
-      this.subscription()
+  chosePeriod = (from) => {
+    const from_dt = DateTime.fromJSDate(from).startOf('day')
+    this.setState({
+      queryFrom: from_dt.minus({ days: 1 }).toJSDate(),
+      from: from_dt.toJSDate(),
+      to: from_dt.endOf('day').toJSDate()
+    })
   }
   // divideWorks = () =>
   render() {
-    // const { allWorks: { loading, error, allWorks } } = this.props
-    const { chartWorks: { loading, error, chartWorks } } = this.props
-    if (loading) return 'Загрузка'
-    if (error) return 'Ошибка'
-    console.log(chartWorks)
-    const chartWorksByExec = _.sortBy(chartWorks, 'execName')
-    console.log(chartWorksByExec)
-    const execList = _.uniqBy(chartWorksByExec, 'execName')
-    console.log(execList)
-    const worksInProgress = _.filter(chartWorks, {'fin': null})
-    console.log(worksInProgress)
-    const widgetList = _.sortBy(_.uniqBy(_.concat(worksInProgress, execList), 'execName'), 'execName')
-    console.log(widgetList)
-    // let chartWorksPerExec = _.groupBy(chartWorksByExec, 'execName')
-    let chartWorksPerExec = _.reduce(_.groupBy(chartWorksByExec, 'execName'), function(result, value, key) {
-      // console.log(result, value, key);
-      result.push(value)
-      return result
-    }, [])
-    console.log(chartWorksPerExec)
-
+    const { from, queryFrom, to } = this.state
+    // console.log(queryFrom.toISOString(), from.toISOString(), to.toISOString());
     return (
-      <div className='komz-no-margin komz-dispacher-grid'>
-        <ChartScale date='2018-03-22'/>
-        <div className='komz-chart-widget-list'>
-          { widgetList.map(work => (
-            <div className='komz-chart-widget' key={work.id}>
-              <Header>{work.execName}</Header>
-              { (!work.fin) &&
-                <Label empty circular className='komz-wt-main' />
-              }
-            </div>
-          )) }
-        </div>
-        <div className='komz-chart'>
-          <WorkLine works={chartWorks} execworks={chartWorksPerExec} />
-          {/* <WorkLine className='komz-workline' works={chartWorks} /> */}
-          {[...Array(23)].map((x, i) =>
-            <div className='komz-chart-section' key={i} />
-          )}
-        </div>
-      </div>
+      <Chart queryFrom={queryFrom} from={from} to={to} chosePeriod={this.chosePeriod} />
     )
   }
 }
 
-// export default DispView
-export default compose(
-    graphql(
-        allWorks,
-        {
-            name: 'allWorks',
-            options: {
-                fetchPolicy: 'cache-and-network',
-            },
-            props: props => ({
-              // ...props
-              allWorks: props.allWorks,
-              subscribeToWorks: () => props.allWorks.subscribeToMore({
-                document: newWork,
-                updateQuery: (prev, { subscriptionData: { data : { newWork } } }) => {
-                  return {
-                    allWorks: [newWork, ...prev.allWorks.filter(work => work.id !== newWork.id)]
-                  }
-                }
-              })
-            })
-        }
-    ),
-    graphql(
-        chartWorks,
-        {
-            name: 'chartWorks',
-            options: {
-                fetchPolicy: 'cache-and-network',
-            },
-            props: props => ({
-              // ...props
-              chartWorks: props.chartWorks,
-              subscribeToWorks: () => props.chartWorks.subscribeToMore({
-                document: newWork,
-                updateQuery: (prev, { subscriptionData: { data : { newWork } } }) => {
-                  // only push newWork if it started not earlier than today
-                  // console.log('newWork > ', newWork, (Date.parse(newWork.start) > DateTime.local().startOf('day').ts));
-                  if (Date.parse(newWork.start) > DateTime.local().startOf('day').ts) {
-                    return {
-                      chartWorks: [newWork, ...prev.chartWorks.filter(work => work.id !== newWork.id)]
-                    }
-                  } else {
-                    return { chartWorks: prev.chartWorks }
-                  }
-                }
-              })
-            })
-        }
-    ),
-)(DispView)
+export default DispView

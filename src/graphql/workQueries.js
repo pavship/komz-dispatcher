@@ -37,8 +37,8 @@ export const allWorks = gql`
   }
 `
 export const chartWorks = gql`
-  query chartWorks ( $period: String! ) {
-    chartWorks ( period: $period ) {
+  query chartWorks ( $queryFrom: String!, $from: String!, $to: String ) {
+    chartWorks ( queryFrom: $queryFrom, from: $from, to: $to ) {
       id
       execName
       start

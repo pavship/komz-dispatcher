@@ -1,6 +1,7 @@
 {
   "name": "komz-dispatcher",
-  "version": "0.1.0",
+  "version": "0.0.7",
+  "homepage": "https://pavship.github.io/komz-dispatcher",
   "private": true,
   "dependencies": {
     "aws-amplify": "^0.2.9",
@@ -8,10 +9,12 @@
     "aws-appsync": "^1.0.12",
     "aws-appsync-react": "^1.0.6",
     "dotenv": "^5.0.1",
+    "gh-pages": "^1.1.0",
     "graphql-tag": "^2.8.0",
     "luxon": "^0.5.8",
     "react": "^16.2.0",
     "react-apollo": "^2.0.4",
+    "react-day-picker": "^7.1.4",
     "react-dom": "^16.2.0",
     "react-scripts": "1.1.1",
     "semantic-ui-css": "^2.3.0",
@@ -21,6 +24,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   }
 }

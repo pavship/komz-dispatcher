@@ -4,17 +4,20 @@ import { DateTime, Interval } from 'luxon'
 class WorkBar extends Component {
   dt = DateTime.local()
   timer
-  startsEarler = (Date.parse(this.props.work.start) < this.dt.startOf('day').ts)
+  startsEarlier = (Date.parse(this.props.work.start) < this.props.chartFrom.getTime())
   finished = !!this.props.work.fin
+  finishesLater = this.finished ? (DateTime.fromJSDate(this.props.chartFrom).endOf('day').ts < Date.parse(this.props.work.fin)) : false
   state = {
     top: this.props.top,
-    left: this.startsEarler ? 0 : Math.round(Interval.fromDateTimes(this.dt.startOf('day'), DateTime.fromISO(this.props.work.start)).length('minute')),
-    width: (this.startsEarler && this.finished) ? Math.round(Interval.fromDateTimes(this.dt.startOf('day'), DateTime.fromISO(this.props.work.fin)).length('minute')) : Math.round(this.props.work.time/60),
-    borderLeftWidth: this.startsEarler ? 0 : 1,
-    borderRightWidth: 1
+    left: this.startsEarlier ? 0 : Math.round(Interval.fromDateTimes(DateTime.fromJSDate(this.props.chartFrom), DateTime.fromISO(this.props.work.start)).length('minute')),
+    width: (this.startsEarlier && this.finished && this.finishesLater) ? 1440 :
+      (this.startsEarlier && this.finished) ? Math.round(Interval.fromDateTimes(DateTime.fromJSDate(this.props.chartFrom), DateTime.fromISO(this.props.work.fin)).length('minute')) :
+      (this.finishesLater) ? Math.round(Interval.fromDateTimes(DateTime.fromISO(this.props.work.start), DateTime.fromJSDate(this.props.chartFrom).endOf('day')).length('minute'))
+      : Math.round(this.props.work.time/60),
+    borderLeftWidth: this.startsEarlier ? 0 : 1,
+    borderRightWidth: this.finishesLater ? 0: 1
   }
   componentDidMount() {
-    const { work: { fin } } = this.props
     if (!this.finished) {
       this.tick()
       this.start()
@@ -23,7 +26,7 @@ class WorkBar extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.work.fin && (this.props.work.fin === null)) {
       this.stop()
-      const width = Math.round(Interval.fromDateTimes(DateTime.fromISO(this.props.work.start), DateTime.fromISO(nextProps.work.fin)).length('minute'))
+      const width = this.startsEarlier ? Math.round(Interval.fromDateTimes(DateTime.fromJSDate(this.props.chartFrom), DateTime.fromISO(nextProps.work.fin)).length('minute')) : Math.round(nextProps.work.time/60)
       this.setState({ width })
     }
   }
@@ -31,14 +34,14 @@ class WorkBar extends Component {
     if (this.timer) this.stop()
   }
   tick = () => {
-    const finishesLater = (this.dt.endOf('day').ts < Date.parse(new Date()))
+    const finishesLater = (DateTime.fromJSDate(this.props.chartFrom).endOf('day').ts < Date.parse(new Date()))
     let width
     if (finishesLater) {
       this.stop()
-      width = Math.round(Interval.fromDateTimes(DateTime.fromISO(this.props.work.start), this.dt.endOf('day')).length('minute'))
+      width = this.startsEarlier ? 1440 : Math.round(Interval.fromDateTimes(DateTime.fromISO(this.props.work.start), DateTime.fromJSDate(this.props.chartFrom).endOf('day')).length('minute'))
       this.setState({borderRightWidth: 0})
     } else {
-      width = Math.round(Interval.fromDateTimes(DateTime.fromISO(this.props.work.start), new Date()).length('minute'))
+      width = this.startsEarlier ? Math.round(Interval.fromDateTimes(DateTime.fromJSDate(this.props.chartFrom), this.dt).length('minute')) : Math.round(Interval.fromDateTimes(DateTime.fromISO(this.props.work.start), this.dt).length('minute'))
     }
     this.setState({ width })
   }

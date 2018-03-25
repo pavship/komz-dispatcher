@@ -45,6 +45,22 @@ body {
   color: rgba(0,0,0,.6);
 }
 
+/* DAY-PICKER-INPUT */
+.DayPickerInput>input {
+  padding: .5em 0em;
+  margin-right: 1em;
+  line-height: 1.21428571em;
+  background: #fff;
+  color: rgba(0,0,0,.87);
+  border: 1px solid rgba(34,36,38,.15);
+  border-radius: .28571429rem;
+  box-shadow: none;
+  text-align: center;
+  display: block;
+  -webkit-tap-highlight-color: rgba(255,255,255,0);
+  transition: box-shadow .1s ease,border-color .1s ease,-webkit-box-shadow .1s ease;
+}
+
 /* KOMZ SPECIFIC */
 
 .komz-no-margin {
@@ -52,6 +68,20 @@ body {
 }
 
 /* LAYOUT */
+
+.komz-exec-container {
+  display: block;
+  margin-left: auto!important;
+  margin-right: auto!important;
+  max-width: 320px !important;
+}
+
+.komz-disp-container {
+  display: block;
+  margin-left: auto!important;
+  margin-right: auto!important;
+  width: 100% !important;
+}
 
 .komz-navbar {
   margin-bottom: 0 !important;
@@ -75,9 +105,15 @@ body {
   border: 1px solid rgba(34,36,38,.15);
   box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
   grid-template-areas: "pad-top pad-top pad-top pad-top"
-                        "pad-left . scale pad-right"
+                        "pad-left datepicker scale pad-right"
                         "pad-left widgets chart pad-right"
                         "pad-bot pad-bot pad-bot pad-bot";
+}
+
+.komz-chart-datepicker {
+  grid-area: datepicker;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .komz-chart-widget-list {
@@ -94,7 +130,7 @@ body {
   grid-area: scale;
   display: grid;
   grid-template-columns: repeat(24, 1fr);
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 0.4fr 0.6fr;
 }
 
 .komz-scale-level1 {
@@ -142,18 +178,33 @@ body {
 }
 
 .komz-workbar.komz-aside {
-  background-color: rgba(255, 179, 99, 0.5);
+  background-color: rgba(255, 179, 99, 0.65);
+}
+.komz-workbar.komz-aside:hover {
+  background-color: rgba(255, 179, 99, 1);
 }
 .komz-workbar.komz-rest {
+  background-color: rgba(247, 239, 129, 0.65);
+}
+.komz-workbar.komz-rest:hover {
   background-color: rgba(247, 239, 129, 1);
 }
 .komz-workbar.komz-negative {
+  background-color: rgba(252, 120, 113, 0.65);
+}
+.komz-workbar.komz-negative:hover {
   background-color: rgba(252, 120, 113, 1);
 }
 .komz-workbar.komz-main {
+  background-color: rgba(191, 221, 126, 0.65);
+}
+.komz-workbar.komz-main:hover {
   background-color: rgba(191, 221, 126, 1);
 }
 .komz-workbar.komz-aux {
+  background-color: rgba(102, 158, 214, 0.65);
+}
+.komz-workbar.komz-aux:hover {
   background-color: rgba(102, 158, 214, 1);
 }
 
