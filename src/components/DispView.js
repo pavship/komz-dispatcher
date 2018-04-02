@@ -1,6 +1,5 @@
 import { DateTime } from 'luxon'
-import React, { Component, Fragment } from 'react'
-import { graphql, compose } from "react-apollo"
+import React, { Component } from 'react'
 
 import Chart from './Chart'
 
@@ -18,12 +17,10 @@ class DispView extends Component {
       to: from_dt.endOf('day').toJSDate()
     })
   }
-  // divideWorks = () =>
   render() {
     const { from, queryFrom, to } = this.state
-    // console.log(queryFrom.toISOString(), from.toISOString(), to.toISOString());
     return (
-      <Chart queryFrom={queryFrom} from={from} to={to} chosePeriod={this.chosePeriod} />
+        <Chart queryFrom={queryFrom} from={from} to={to} chosePeriod={this.chosePeriod} />
     )
   }
 }

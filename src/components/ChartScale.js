@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { DateTime } from 'luxon'
 
 class ChartScale extends Component {
   render() {

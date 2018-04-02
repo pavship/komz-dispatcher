@@ -1,7 +1,5 @@
-import React, { Component, Fragment } from 'react'
-import { Grid, Item, Button } from 'semantic-ui-react'
+import React, { Fragment } from 'react'
 import Main from './components/Main'
-import ModelList from './components/ModelList'
 
 import appSyncConfig from "./AppSync"
 import { ApolloProvider } from "react-apollo"
@@ -11,6 +9,9 @@ import Amplify, {I18n, Auth} from "aws-amplify"
 import { withAuthenticator } from "aws-amplify-react"
 
 const App = () => {
+  console.log(client);
+  // client.cache.reset()
+  client.resetStore()
   return (
     <Fragment>
       <Main />

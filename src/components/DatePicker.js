@@ -1,10 +1,9 @@
+import { DateTime } from 'luxon'
 import React, { Component } from 'react'
 
 import DayPickerInput from 'react-day-picker/DayPickerInput'
 import 'react-day-picker/lib/style.css'
 
-import { Input } from 'semantic-ui-react'
-import { DateTime } from 'luxon'
 
 class DatePicker extends Component {
   // state = {

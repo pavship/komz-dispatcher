@@ -1,0 +1,101 @@
+[33mcommit 97cb03a85361dc62c98b10961d2776969457aac5[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Pavel Shipitsyn <pavship@yandex.ru>
+Date:   Sun Mar 25 15:58:09 2018 +0300
+
+    0.0.7.3 Multi exec chart with datepicker
+
+[33mcommit 5e285c45c5c4e5cae1bcabab80cf4cb6c0e88c67[m
+Author: Pavel Shipitsyn <pavship@yandex.ru>
+Date:   Thu Mar 22 18:50:23 2018 +0300
+
+    0.0.7.2 Basic multi exec chart
+
+[33mcommit 06cee7eb1899a1000643944b563b5fc029a435d9[m
+Author: Pavel Shipitsyn <pavship@yandex.ru>
+Date:   Thu Mar 22 15:22:36 2018 +0300
+
+    0.0.7.1 Multi user multi worktype exec control panel
+
+[33mcommit 51ef1b19ae890700dedcb54e92b5ad24e0339598[m
+Author: Pavel Shipitsyn <pavship@yandex.ru>
+Date:   Wed Mar 21 17:23:57 2018 +0300
+
+    0.0.7 Hippy style exec control panel
+
+[33mcommit adf94420d1db36ca6164a82ac5aec4431a1976d0[m
+Author: Pavel Shipitsyn <pavship@yandex.ru>
+Date:   Mon Mar 19 05:23:31 2018 +0300
+
+    0.0.6.6 Chart grid lines
+
+[33mcommit be50543346f3f8dbb20499243efef01474292988[m
+Author: Pavel Shipitsyn <pavship@yandex.ru>
+Date:   Mon Mar 19 02:46:40 2018 +0300
+
+    0.0.6.5 Basic charting
+
+[33mcommit 823efd3778dbdd286bfb41b9ab928bb46e8d55ad[m
+Author: Pavel Shipitsyn <pavship@yandex.ru>
+Date:   Sun Mar 18 19:45:53 2018 +0300
+
+    0.0.6.4 Basic work handling by Executor
+
+[33mcommit e9431b358bb31f1d8e65e4e9df545374a601b8a4[m
+Author: Pavel Shipitsyn <pavship@yandex.ru>
+Date:   Sun Mar 18 00:27:54 2018 +0300
+
+    0.0.6.3 Basic work bar 1440px
+
+[33mcommit 566645b1a76963481818e02226df62b9a7a62f10[m
+Author: Pavel Shipitsyn <pavship@yandex.ru>
+Date:   Sat Mar 17 21:52:54 2018 +0300
+
+    0.0.6.2 Basic live subscriptions for the dashboard
+
+[33mcommit 821498af9440a3d77bfc00e8ad454047b734e6a8[m
+Author: Pavel Shipitsyn <pavship@yandex.ru>
+Date:   Fri Mar 16 21:15:44 2018 +0300
+
+    0.0.6.1 Basic dashboard for dispatchers
+
+[33mcommit b8e218e85306d04d979ae65e26aacb2638f1f4cd[m
+Author: Pavel Shipitsyn <pavship@yandex.ru>
+Date:   Fri Mar 16 19:46:10 2018 +0300
+
+    0.0.6 Register works. Basic createWork mutation
+
+[33mcommit 3067ee741c68308f2ea04043b45a917a054070de[m
+Author: Pavel Shipitsyn <pavship@yandex.ru>
+Date:   Fri Mar 16 04:50:01 2018 +0300
+
+    0.0.5 Auth forms design acceptable
+
+[33mcommit cd578e4299fba3d7a8c77c4a3e3761ba874e5743[m
+Author: Pavel Shipitsyn <pavship@yandex.ru>
+Date:   Fri Mar 16 03:21:31 2018 +0300
+
+    0.0.4 curUser and deptModel queries. Bad looking Auth with aws-amplify
+
+[33mcommit e76e114252ac17b03769a8430598f42606afe0ea[m
+Author: Pavel Shipitsyn <pavship@yandex.ru>
+Date:   Sun Mar 11 21:50:37 2018 +0300
+
+    0.0.3 Fancy sidebar with ModelList
+
+[33mcommit ab4d79ac0e2b8ab5076c2eb2fa62c7a021e57448[m
+Author: Pavel Shipitsyn <pavship@yandex.ru>
+Date:   Sun Mar 11 18:29:42 2018 +0300
+
+    0.0.2 ProdList is showing
+
+[33mcommit 00c22694de1fa7e1965a4b602cf8cbbb841dd08b[m
+Author: Pavel Shipitsyn <pavship@yandex.ru>
+Date:   Sun Mar 11 12:21:02 2018 +0300
+
+    0.0.1 Basic working create-react-app with AWS AppSync
+
+[33mcommit a213ffc182037d695cded48e3e16c7e19dc69212[m
+Author: Pavel Shipitsyn <pavship@yandex.ru>
+Date:   Sun Mar 11 03:41:09 2018 +0300
+
+    Initial commit

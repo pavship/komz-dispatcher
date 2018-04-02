@@ -1,0 +1,46 @@
+// curWork
+// REQUEST-------------------------------------
+
+{
+    "version" : "2017-02-28",
+    "operation" : "Query",
+    "query" : {
+        "expression": "orgId = :orgId",
+        "expressionValues" : {
+            ":orgId" : {
+                "N" : 1
+            }
+        }
+    },
+    "filter": {
+    	"expression": "#exec = :exec",
+        "expressionNames": {
+        	"#exec": "exec"
+        }
+        "expressionValues" : {
+            ":exec" : {
+                "S" : "$ctx.identity.sub"
+            }
+        }
+    },
+    "scanIndexForward": false
+}
+
+// RESPONSE-------------------------------------
+## #set($myResults = [])
+## #foreach($item in $ctx.result.items)
+##     ## For Cognito User Pools use $ctx.identity.username instead
+##     #if($item.Owner == $ctx.identity.cognitoIdentityId)
+##         #set($added = $myResults.add($item))
+##     #end
+## #end
+## $utils.toJson($myResults)
+
+#if($ctx.result.items.isEmpty())
+	#set($result = {
+    	"noRecent": true
+    })
+	$util.toJson($result)
+#else
+	$util.toJson($ctx.result.items[0])
+#end
