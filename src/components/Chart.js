@@ -94,12 +94,22 @@ class Chart extends Component {
           <ChartScale />
           <DatePicker selectedDay={from} chosePeriod={chosePeriod} />
           <div className='komz-chart-widget-list'>
-            { widgetList.map(work => (
-              <div className='komz-chart-widget' key={work.id}>
-                <Header>{work.execName}</Header>
-                { (!work.fin) &&
-                  // <Label empty circular className='komz-wt-main' />
+            { widgetList.map(({ id, execName, fin, workType, workSubType, models }) => (
+              <div className='komz-chart-widget' key={id}>
+                <Header>
+                  {execName}
+                  <Header.Subheader className={fin && 'komz-red'}>
+                    {!fin ? (workSubType || workType) : 'Не регистрируется'}
+                  </Header.Subheader>
+                </Header>
+                { (!fin) &&
                   <Icon name='setting' loading />
+                }
+                { models &&
+                  <Header size='huge' sub floated='right' className='komz-disp-widget-model'>
+                    {models[0].name}
+                    { models[0].prods.length > 1 && ` (${models[0].prods.length}шт.)`}
+                  </Header>
                 }
               </div>
             )) }

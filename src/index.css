@@ -76,6 +76,10 @@ body {
   display: flex !important;
 }
 
+.komz-red {
+  color: #db2828 !important;
+}
+
 /* LAYOUT */
 
 .komz-exec-container {
@@ -131,7 +135,7 @@ body {
 .komz-dispacher-grid {
   display: grid;
   grid-template-columns: 20px 360px 1440px 20px;
-  grid-template-rows: 20px 40px 300px 50px;
+  grid-template-rows: 20px 40px 400px 30px;
   border: 1px solid rgba(34,36,38,.15);
   box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
   grid-template-areas: "pad-top pad-top pad-top pad-top"
@@ -154,6 +158,11 @@ body {
 .komz-chart-widget {
   display:flex;
   height: 50px;
+}
+
+.komz-disp-widget-model {
+  margin-left: auto !important;
+  margin-right: 15px !important;
 }
 
 .komz-scale {
