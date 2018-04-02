@@ -9,9 +9,8 @@ import Amplify, {I18n, Auth} from "aws-amplify"
 import { withAuthenticator } from "aws-amplify-react"
 
 const App = () => {
-  console.log(client);
   // client.cache.reset()
-  client.resetStore()
+  // client.resetStore()
   return (
     <Fragment>
       <Main />

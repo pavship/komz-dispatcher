@@ -21,7 +21,7 @@ class ExecCard extends Component {
   render() {
     const { now } = this.state
     const { works } = this.props
-    console.log(now);
+    // console.log(now);
     const aggregateTime = (col) => {
       return Math.round( col.reduce((sum, { chTime }) => sum + chTime, 0) /36000)/100
     }
@@ -47,7 +47,7 @@ class ExecCard extends Component {
                           (workType === 'Отдых') ? 'rest' : 'negative',
           workSubTypes: _(works).groupBy('workSubType').reduce(
             function(workSubTypes, works, workSubType) {
-              console.log(works);
+              // console.log(works);
               // reject null subTypes
               workSubType !== 'null' && workSubTypes.push({
                 workSubType,
@@ -55,7 +55,7 @@ class ExecCard extends Component {
                 models: _(works).groupBy('models[0].article').reduce(
                   function(models, works, article) {
                     // reject works with undefined models
-                    console.log(models, works, article);
+                    // console.log(models, works, article);
                     if (article !== 'undefined') {
                       const { name, article } = works[0].models[0]
                       const time = aggregateTime(works)
@@ -73,7 +73,7 @@ class ExecCard extends Component {
                           }))
                         })).flatten().groupBy('id').reduce(
                           function(prods, value, id) {
-                            console.log(prods, value, id);
+                            // console.log(prods, value, id);
                             prods.push({
                               id,
                               fullnumber: value[0].fullnumber,
