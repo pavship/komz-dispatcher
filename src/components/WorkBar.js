@@ -1,7 +1,9 @@
 import { DateTime, Interval } from 'luxon'
 import React, { Component } from 'react'
 
-import { Popup, Accordion, List, Header, Icon } from 'semantic-ui-react'
+import { Popup, Accordion, List, Header, Icon, Divider, Button } from 'semantic-ui-react'
+
+import WorkPopup from './WorkPopup'
 
 class WorkBar extends Component {
   timer
@@ -59,47 +61,11 @@ class WorkBar extends Component {
                           (wt === 'Побочные') ? 'aside' :
                           (wt === 'Отдых') ? 'rest' : 'negative'
     return (
-      <Popup
-        trigger={
-          <div className={`komz-workbar komz-${workTypeClass}`}
-            style={{top, left, width, borderLeftWidth, borderRightWidth}}
-          ></div>
-        }
-        position='bottom right'
-        flowing
-        hoverable
-      >
-        <Header>
-          { !work.fin && <Icon name='setting' loading />}
-          <Header.Content>
-            {work.workSubType || work.workType} { work.time && `${Math.round(work.time/36)/100}ч` }
-            <Header.Subheader>
-              {!work.fin && 'с '}{DateTime.fromISO(work.start).toFormat("HH':'mm")}{work.fin && ` - ${DateTime.fromISO(work.fin).toFormat("HH':'mm")}` }
-            </Header.Subheader>
-          </Header.Content>
-        </Header>
-        { work.models &&
-          <Accordion>
-            { work.models.map((model, i) => {
-              const { name, article, prods } = model
-              return (
-                <div key={i} >
-                  <Accordion.Title active index={i}>
-                    <Header size='tiny'>
-                      {name} ( {article} )
-                    </Header>
-                  </Accordion.Title>
-                  <Accordion.Content active>
-                    <List size='medium' className='komz-workbar-popup-list'>
-                      {prods.map(prod => <List.Item key={prod.id}>{prod.fullnumber}</List.Item>)}
-                    </List>
-                  </Accordion.Content>
-                </div>
-              )
-            })}
-          </Accordion>
-        }
-      </Popup>
+      <WorkPopup work={work}>
+        <div className={`komz-workbar komz-${workTypeClass}`}
+          style={{top, left, width, borderLeftWidth, borderRightWidth}}
+        ></div>
+      </WorkPopup>
     )
   }
 }

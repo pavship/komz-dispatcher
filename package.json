@@ -16,7 +16,7 @@
     "react-apollo": "^2.0.4",
     "react-day-picker": "^7.1.4",
     "react-dom": "^16.2.0",
-    "react-scripts": "1.1.1",
+    "react-scripts": "1.1.4",
     "semantic-ui-css": "^2.3.0",
     "semantic-ui-react": "^0.78.3"
   },
