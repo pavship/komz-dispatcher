@@ -1,8 +1,6 @@
 import { DateTime, Interval } from 'luxon'
 import React, { Component } from 'react'
 
-import { Popup, Accordion, List, Header, Icon, Divider, Button } from 'semantic-ui-react'
-
 import WorkPopup from './WorkPopup'
 
 class WorkBar extends Component {

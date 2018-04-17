@@ -1,7 +1,10 @@
 import { DateTime } from 'luxon'
 import React, { Component } from 'react'
+import { graphql, compose } from "react-apollo"
 
-import { Popup, Accordion, List, Header, Icon, Divider, Button, Form, Message } from 'semantic-ui-react'
+import { Popup, Accordion, List, Header, Icon, Divider, Button, Form } from 'semantic-ui-react'
+
+import { editWork } from '../graphql/workQueries'
 
 class WorkPopup extends Component {
   state = {
@@ -15,7 +18,7 @@ class WorkPopup extends Component {
   handleClose = () => {!this.state.edit && this.setState({open: false})}
   toggleEdit = () => this.setState({edit: !this.state.edit})
   handleChange = (e, { name, value }) => this.setState({ [name]: value })
-  submit = () => {
+  edit = () => {
     const start = new Date(this.state.start)
     const fin = this.state.fin ? new Date(this.state.fin) : null
     // date validation
@@ -23,6 +26,12 @@ class WorkPopup extends Component {
     if (isValid(start) && (!fin || isValid(fin))) {
       console.log(start, fin);
     }
+  }
+  delete = () => {
+    this.props.editWork({
+      variables: { id: this.props.work.id, delete: true }
+    })
+    this.setState({edit: false})
   }
   cancel = () => {
     this.setState({edit: false})
@@ -80,8 +89,12 @@ class WorkPopup extends Component {
                 <Form.Input name='fin' label='Окончание' type='datetime-local'
                   onChange={this.handleChange} value={fin}/>
               }
-              <Button icon='checkmark' content='Сохранить' floated='right' onClick={this.submit} />
-              <Button icon='remove' content='Отмена' floated='right' onClick={this.cancel} />
+
+              <Form.Group inline>
+                <Button icon='ban' content='Удалить' floated='right' color='red' onClick={this.delete} />
+                <Button icon='checkmark' content='Сохранить' floated='right' onClick={this.edit} />
+              </Form.Group>
+              <Form.Button floated='right' icon='remove' content='Отмена' onClick={this.cancel} />
             </Form>
         }
       </Popup>
@@ -89,4 +102,12 @@ class WorkPopup extends Component {
   }
 }
 
-export default WorkPopup
+// export default WorkPopup
+export default compose(
+    graphql(
+        editWork,
+        {
+            name: 'editWork'
+        }
+    ),
+)(WorkPopup);

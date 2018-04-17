@@ -43,3 +43,24 @@ export const newWork = gql`
     }
   }
 `
+export const editWork = gql`
+  mutation editWork ( $id: ID!, $start: String, $fin: String, $delete: Boolean ) {
+    editWork ( id: $id, start: $start, fin: $fin, delete: $delete ) {
+      id
+      execName
+      start
+      fin
+      time
+      workType
+      workSubType
+      models {
+        name
+        article
+        prods {
+          id
+          fullnumber
+        }
+      }
+    }
+  }
+`
