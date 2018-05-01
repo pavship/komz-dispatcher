@@ -49,7 +49,8 @@ class Chart extends Component {
       const chStart = early ? from_ep : start_ep
       const chFin = late ? to_ep + 1 : fin_ep
       const chTime = chFin ? chFin - chStart : null // chTime is Null only for live works (running within chart's time boundaries)
-      // TODO prepare left, param and make WorkBar component stateless
+      const chLeft = Math.round( (chStart - from_ep)/60000 )
+      // TODO prepare other workBar params and make WorkBar component stateless
       const sortIndex = (work.workType === 'Прямые') ? 1.0 :
                         (work.workType === 'Косвенные') ? 2.0 :
                         (work.workType === 'Отдых') ? 3.0 :
@@ -57,6 +58,7 @@ class Chart extends Component {
       return {
         early,
         late,
+        chLeft,
         chStart,
         chTime,
         sortIndex,
@@ -98,13 +100,16 @@ class Chart extends Component {
                 <Header>
                   {execName}
                   <Header.Subheader className={fin && 'komz-red'}>
-                    {!fin ? (workSubType || workType) : 'Не регистрируется'}
+                    {!fin
+                      ? (workSubType || workType)
+                       // show warning message if exec is not registering work now, today
+                      : (from.toDateString() === new Date().toDateString()) && 'Не регистрируется'}
                   </Header.Subheader>
                 </Header>
                 { (!fin) &&
                   <Icon name='setting' loading />
                 }
-                { models &&
+                { !fin && models &&
                   <Header size='huge' sub floated='right' className='komz-disp-widget-model'>
                     {models[0].name}
                     { models[0].prods.length > 1 && ` (${models[0].prods.length}шт.)`}
@@ -138,42 +143,30 @@ export default compose(
         {
             name: 'chartWorks',
             options: {
-                // fetchPolicy: 'cache-and-network',
-                fetchPolicy: 'network-only',
+                fetchPolicy: 'cache-and-network',
             },
             props: ({ chartWorks, ownProps }) => {
-              console.log(ownProps)
-              const p = { ...ownProps }
               return {
                 chartWorks: chartWorks,
                 subscribeToWorks: () => {
-                  console.log('subscribeToWorks > ownProps > ', ownProps)
                   return chartWorks.subscribeToMore({
-                  document: newWork,
-                  // fetchPolicy: 'network-only',
-                  // fetchPolicy: 'no-cache',
-                  updateQuery: (prev, { subscriptionData: { data : { newWork } } }) => {
-                    // only push newWork if it fits selected chart period
-                    console.log('updateQuery > newWork > ', newWork);
-                    console.log('updateQuery > ownProps > ', ownProps);
-                    console.log('updateQuery > p > ', p);
-                    const start = DateTime.fromISO(newWork.start).ts
-                    const fin = newWork.fin ? DateTime.fromISO(newWork.fin).ts : null
-                    const queryFrom = ownProps.queryFrom.getTime()
-                    const from = ownProps.from.getTime()
-                    const to = ownProps.to.getTime()
-                    console.log(start, fin, queryFrom, ownProps.queryFrom, from, ownProps.from, to, ownProps.to );
-                    if (!(queryFrom < start && start < to && (!fin || (from < fin)))) return { chartWorks: prev.chartWorks }
-                    console.log(start, fin, queryFrom, from, to);
-                    const filteredWorks = prev.chartWorks.filter(work => work.id !== newWork.id)
-                    if (newWork.deleted) return { chartWorks: filteredWorks }
-                    return { chartWorks: [...filteredWorks, newWork] }
-                    // if (ownProps.from.getTime() === DateTime.local().startOf('day').ts) {
-                    // } else {
-                    //   return { chartWorks: prev.chartWorks }
-                    // }
-                  }
-                })}
+                    document: newWork,
+                    updateQuery: (prev, { subscriptionData: { data : { newWork } } }) => {
+                      const chartWorks = prev.chartWorks
+                      // filter out received newWork from chartWorks
+                      const filteredWorks = chartWorks.filter(work => work.id !== newWork.id)
+                      // if the work was deleted return filteredWorks
+                      if (newWork.deleted) return { chartWorks: filteredWorks }
+                      // otherwise, substitute or add newWork
+                      return { chartWorks: [...filteredWorks, newWork] }
+                      // TODO implementation above should check that newWork fits
+                      // selected chart time period (is between ownProps.from and ownProps.to),
+                      // but ownProps aren't equal Chart's props (Apollo bug) and
+                      // we're waiting until apollo fixes this issue
+                      // https://github.com/apollographql/react-apollo/issues/1958
+                    }
+                  })
+                }
               }
             }
         }

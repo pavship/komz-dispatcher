@@ -9,7 +9,7 @@ subscription newWork {
 mutation createWork {
   createWork (
     execName: "Портной С."
-    start: "2018-04-06T10:00:00.000Z"
+    start: "2018-04-13T01:00:00.000Z"
     workType: "Побочные"
   ) {
     id
@@ -23,8 +23,21 @@ mutation createWork {
 mutation finishWork {
   finishWork (
     id: "2018-04-06T10:00:00.000Z-8a25d269a30d"
-    fin: "2018-04-07T11:00:00.000Z"
+    fin: "2018-04-13T02:00:00.000Z"
     time: 3600
+  ) {
+    id
+    exec
+    execName
+    start
+    fin
+    time
+  }
+}
+mutation editWork {
+  editWork (
+    id: "2018-04-06T10:00:00.000Z-8a25d269a30d"
+    delete: true
   ) {
     id
     exec

@@ -17,14 +17,22 @@ class WorkPopup extends Component {
   handleOpen = () => this.setState({open: true})
   handleClose = () => {!this.state.edit && this.setState({open: false})}
   toggleEdit = () => this.setState({edit: !this.state.edit})
-  handleChange = (e, { name, value }) => this.setState({ [name]: value })
+  handleChange = (e, { name, value }) => {
+    this.setState({ [name]: value })
+  }
   edit = () => {
     const start = new Date(this.state.start)
     const fin = this.state.fin ? new Date(this.state.fin) : null
     // date validation
+    // TODO move validation to handleChange fn, add form validation
     const isValid = (date) => date instanceof Date && !isNaN(date.valueOf())
     if (isValid(start) && (!fin || isValid(fin))) {
       console.log(start, fin);
+      // send request if form has no errors
+      this.props.editWork({
+        variables: { id: this.props.work.id, start, fin }
+      })
+      this.setState({edit: false})
     }
   }
   delete = () => {
@@ -82,7 +90,9 @@ class WorkPopup extends Component {
         }
         <Divider />
         { !edit
-          ? <Button icon='edit' content='Редактировать' floated='right' onClick={this.toggleEdit} />
+          ? <Button icon='edit' content='Редактировать' floated='right'
+              disabled={!fin}
+              onClick={this.toggleEdit} />
           : <Form>
               <Form.Input name='start' label='Начало' type='datetime-local'
                 onChange={this.handleChange} value={start}/>
