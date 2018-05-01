@@ -153,10 +153,10 @@ export default compose(
                     document: newWork,
                     updateQuery: (prev, { subscriptionData: { data : { newWork } } }) => {
                       const chartWorks = prev.chartWorks
-                      // filter out received newWork from chartWorks
-                      const filteredWorks = chartWorks.filter(work => work.id !== newWork.id)
+                      // filter old works from chartWorks
+                      const filteredWorks = chartWorks.filter(work => work.id !== (newWork.deleted || newWork.id))
                       // if the work was deleted return filteredWorks
-                      if (newWork.deleted) return { chartWorks: filteredWorks }
+                      if (newWork.deleted === newWork.id) return { chartWorks: filteredWorks }
                       // otherwise, substitute or add newWork
                       return { chartWorks: [...filteredWorks, newWork] }
                       // TODO implementation above should check that newWork fits
