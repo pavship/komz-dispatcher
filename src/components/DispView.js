@@ -5,6 +5,7 @@ import Chart from './Chart'
 
 class DispView extends Component {
   state = {
+    // query 1 day before selected day to include works that started earlier
     queryFrom: DateTime.local().startOf('day').minus({ days: 1 }).toJSDate(),
     from: DateTime.local().startOf('day').toJSDate(),
     to: DateTime.local().endOf('day').toJSDate()

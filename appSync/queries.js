@@ -7,22 +7,28 @@ subscription newWork {
   }
 }
 mutation createWork {
- createWork (
-    start: "sidfjsf"
-  ){
+  createWork (
+    execName: "Портной С."
+    start: "2018-04-06T10:00:00.000Z"
+    workType: "Побочные"
+  ) {
     id
+    exec
+    execName
     start
     fin
     time
   }
 }
 mutation finishWork {
- finishWork (
-    id: "00416c6c-3e79-48b3-ba3e-358ea381a589",
-  	time: 15,
-    fin: "sdfsdfsfd"
-  ){
+  finishWork (
+    id: "2018-04-06T10:00:00.000Z-8a25d269a30d"
+    fin: "2018-04-07T11:00:00.000Z"
+    time: 3600
+  ) {
     id
+    exec
+    execName
     start
     fin
     time

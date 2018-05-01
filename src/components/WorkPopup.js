@@ -48,6 +48,7 @@ class WorkPopup extends Component {
         position='bottom right'
         flowing
         hoverable
+        horizontalOffset={work.time < 1140 ? 19 : 0}
       >
         <Header>
           { !work.fin && <Icon name='setting' loading />}

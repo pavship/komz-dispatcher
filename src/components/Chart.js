@@ -24,8 +24,8 @@ class Chart extends Component {
   state = {
     selectedDay: new Date()
   }
-  handleDayChange = (day) => {
-    this.setState({ selectedDay: day })
+  componentWillReceiveProps(nextProps) {
+    // console.log('received props', nextProps);
   }
   render() {
     const { from, to, chosePeriod, chartWorks: { loading, error, chartWorks } } = this.props
@@ -87,7 +87,6 @@ class Chart extends Component {
         return result
     }, [])
     // console.log(cardWorksPerExec);
-
     return (
       <Fragment>
         <div className='komz-no-margin komz-dispacher-grid'>
@@ -139,28 +138,44 @@ export default compose(
         {
             name: 'chartWorks',
             options: {
-                fetchPolicy: 'cache-and-network',
+                // fetchPolicy: 'cache-and-network',
+                fetchPolicy: 'network-only',
             },
-            props: props => {
-              // console.log(props.chartWorks);
+            props: ({ chartWorks, ownProps }) => {
+              console.log(ownProps)
+              const p = { ...ownProps }
               return {
-              chartWorks: props.chartWorks,
-              subscribeToWorks: () => props.chartWorks.subscribeToMore({
-                document: newWork,
-                updateQuery: (prev, { subscriptionData: { data : { newWork } } }) => {
-                  // only push newWork if it started not earlier than today
-                  // console.log('newWork > ', newWork, (Date.parse(newWork.start) > DateTime.local().startOf('day').ts));
-                  console.log(prev);
-                  if (Date.parse(newWork.start) > DateTime.local().startOf('day').ts) {
-                    return {
-                      chartWorks: [...prev.chartWorks.filter(work => work.id !== newWork.id), newWork]
-                    }
-                  } else {
-                    return { chartWorks: prev.chartWorks }
+                chartWorks: chartWorks,
+                subscribeToWorks: () => {
+                  console.log('subscribeToWorks > ownProps > ', ownProps)
+                  return chartWorks.subscribeToMore({
+                  document: newWork,
+                  // fetchPolicy: 'network-only',
+                  // fetchPolicy: 'no-cache',
+                  updateQuery: (prev, { subscriptionData: { data : { newWork } } }) => {
+                    // only push newWork if it fits selected chart period
+                    console.log('updateQuery > newWork > ', newWork);
+                    console.log('updateQuery > ownProps > ', ownProps);
+                    console.log('updateQuery > p > ', p);
+                    const start = DateTime.fromISO(newWork.start).ts
+                    const fin = newWork.fin ? DateTime.fromISO(newWork.fin).ts : null
+                    const queryFrom = ownProps.queryFrom.getTime()
+                    const from = ownProps.from.getTime()
+                    const to = ownProps.to.getTime()
+                    console.log(start, fin, queryFrom, ownProps.queryFrom, from, ownProps.from, to, ownProps.to );
+                    if (!(queryFrom < start && start < to && (!fin || (from < fin)))) return { chartWorks: prev.chartWorks }
+                    console.log(start, fin, queryFrom, from, to);
+                    const filteredWorks = prev.chartWorks.filter(work => work.id !== newWork.id)
+                    if (newWork.deleted) return { chartWorks: filteredWorks }
+                    return { chartWorks: [...filteredWorks, newWork] }
+                    // if (ownProps.from.getTime() === DateTime.local().startOf('day').ts) {
+                    // } else {
+                    //   return { chartWorks: prev.chartWorks }
+                    // }
                   }
-                }
-              })
-            }}
+                })}
+              }
+            }
         }
     ),
 )(Chart)

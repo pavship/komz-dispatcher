@@ -61,6 +61,7 @@ export const editWork = gql`
           fullnumber
         }
       }
+      deleted
     }
   }
 `
