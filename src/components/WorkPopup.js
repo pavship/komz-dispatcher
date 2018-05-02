@@ -14,6 +14,11 @@ class WorkPopup extends Component {
     start: DateTime.fromISO(this.props.work.start).toISO().slice(0,16),
     fin: this.props.work.fin && new DateTime.fromISO(this.props.work.fin).toISO().slice(0,16),
   }
+  componentWillReceiveProps(nextProps) {
+    // update state.fin
+    const fin = nextProps.work.fin
+    fin && this.setState({ fin: new DateTime.fromISO(fin).toISO().slice(0,16) })
+  }
   handleOpen = () => this.setState({open: true})
   handleClose = () => {!this.state.edit && this.setState({open: false})}
   toggleEdit = () => this.setState({edit: !this.state.edit})

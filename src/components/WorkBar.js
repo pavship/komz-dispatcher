@@ -12,12 +12,7 @@ class WorkBar extends Component {
   finishesLater = this.finished ? (DateTime.fromJSDate(this.props.chartFrom).endOf('day').ts < Date.parse(this.props.work.fin)) : false
   state = {
     top: this.props.top,
-    // left: this.startsEarlier ? 0 : Math.round(Interval.fromDateTimes(DateTime.fromJSDate(this.props.chartFrom), DateTime.fromISO(this.props.work.start)).length('minute')),
     width: this.chTime && Math.round(this.chTime/60000),
-    // width: (this.startsEarlier && this.finished && this.finishesLater) ? 1440 :
-    //   (this.startsEarlier && this.finished) ? Math.round(Interval.fromDateTimes(DateTime.fromJSDate(this.props.chartFrom), DateTime.fromISO(this.props.work.fin)).length('minute')) :
-    //   (this.finishesLater) ? Math.round(Interval.fromDateTimes(DateTime.fromISO(this.props.work.start), DateTime.fromJSDate(this.props.chartFrom).endOf('day')).length('minute'))
-    //   : Math.round(this.props.work.time/60),
     borderLeftWidth: this.startsEarlier ? 0 : 1,
     borderRightWidth: this.finishesLater ? 0: 1
   }
@@ -32,9 +27,6 @@ class WorkBar extends Component {
       this.stop()
       const width = this.startsEarlier ? Math.round(Interval.fromDateTimes(DateTime.fromJSDate(this.props.chartFrom), DateTime.fromISO(nextProps.work.fin)).length('minute')) : Math.round(nextProps.work.time/60)
       this.setState({ width })
-    }
-    if (!nextProps.work.fin) {
-      this.tick()
     }
   }
   componentWillUnmount() {
