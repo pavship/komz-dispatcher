@@ -254,9 +254,14 @@ body {
 }
 
 /* CARD */
+.komz-disp-cards-segment {
+  padding-bottom: 1.6em !important;
+}
+
 .komz-disp-card {
-  height: 400px;
+  height: 420px;
   width: 260px !important;
+  margin-bottom: 0.275em !important;
 }
 
 .komz-disp-card .content:nth-child(1) {

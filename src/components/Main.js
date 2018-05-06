@@ -1,9 +1,12 @@
-import React, { Component } from 'react'
+import { HashRouter as Router, Route, Redirect } from "react-router-dom"
+import React, { Component, Fragment } from 'react'
 import { graphql, compose } from "react-apollo"
 // import { Query } from 'react-apollo'
 
+
 import NavBar from './NavBar'
 import DispView from './DispView'
+import MonthView from './MonthView'
 
 import { currentUser } from '../graphql/userQueries'
 
@@ -13,16 +16,22 @@ class Main extends Component {
     if (loading) return 'Загрузка'
     if (error) return 'Ошибка'
     return (
+      <Router>
       <div className='komz-disp-container' >
         <NavBar user={currentUser} />
-        { currentUser.isDisp
-          ? <DispView />
-          : <div>
+        { !currentUser.isDisp
+          ? <div>
               Похоже, Вы не являетесь диспетчером. Панель исполнителя доступна по адресу: <a
               href='https://pavship.github.io/komz-executor'>https://pavship.github.io/komz-executor</a>
             </div>
+          : <Fragment>
+              <Redirect from="/" to="day" />
+              <Route path="/day" component={DispView} />
+              <Route path="/month" component={MonthView} />
+            </Fragment>
         }
       </div>
+      </Router>
     )
   }
 }

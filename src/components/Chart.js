@@ -66,7 +66,7 @@ class Chart extends Component {
       }
     })
     // console.log(preparedWorks);
-    //filter out running works which run on the day before selected period. Then sort
+    //filter out running works when selected period is any further than today. Then sort
     const chartWorksByExec = _.sortBy(preparedWorks.filter(work => !(!work.fin && _.now() < from_ep)), 'execName')
     // console.log(chartWorksByExec)
     const chartWorksPerExec = _.reduce(_.groupBy(chartWorksByExec, 'execName'), function(result, value, key) {
@@ -125,9 +125,8 @@ class Chart extends Component {
             )}
           </div>
         </div>
-        <Segment className='komz-no-margin' >
+        <Segment className='komz-no-margin komz-disp-cards-segment' >
           <Card.Group>
-            {/* <ExecCard /> */}
             { cardWorksPerExec.map((works, i) => <ExecCard works={works} key={i}/>) }
           </Card.Group>
         </Segment>
