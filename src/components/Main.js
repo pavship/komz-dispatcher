@@ -1,12 +1,12 @@
-import { HashRouter as Router, Route, Redirect } from "react-router-dom"
-import React, { Component, Fragment } from 'react'
+import { HashRouter as Router, Switch, Route, Redirect } from "react-router-dom"
+import React, { Component } from 'react'
 import { graphql, compose } from "react-apollo"
 // import { Query } from 'react-apollo'
 
 
 import NavBar from './NavBar'
 import DispView from './DispView'
-import MonthView from './MonthView'
+import Month from './Month'
 
 import { currentUser } from '../graphql/userQueries'
 
@@ -24,11 +24,11 @@ class Main extends Component {
               Похоже, Вы не являетесь диспетчером. Панель исполнителя доступна по адресу: <a
               href='https://pavship.github.io/komz-executor'>https://pavship.github.io/komz-executor</a>
             </div>
-          : <Fragment>
-              <Redirect from="/" to="day" />
+          : <Switch>
               <Route path="/day" component={DispView} />
-              <Route path="/month" component={MonthView} />
-            </Fragment>
+              <Route path="/month" component={Month} />
+              <Redirect to="day" />
+            </Switch>
         }
       </div>
       </Router>

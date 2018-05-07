@@ -1,0 +1,105 @@
+type DeptModel {
+	id: ID!
+	dept: ID!
+	model: Model!
+	prods: [Prod]
+}
+
+type ExecDayStat {
+	id: ID!
+	execName: String
+	time: Int
+	workTypes: [WorkType]
+}
+
+type Model {
+	id: ID!
+	article: String!
+	name: String
+	time: Int
+	prods: [Prod]
+}
+
+type Mutation {
+	createUser(id: String!, name: String!, gqDept: String): User
+	createWork(
+		start: String!,
+		execName: String!,
+		workType: String!,
+		workSubType: String,
+		models: String
+	): Work
+	finishWork(id: ID!, time: Int, fin: String): Work
+	editWork(
+		id: ID!,
+		start: String,
+		fin: String,
+		delete: Boolean
+	): Work
+}
+
+type Prod {
+	id: ID!
+	fullnumber: String!
+	hasDefect: Boolean
+	isSpoiled: Boolean
+	time: Int
+}
+
+type Query {
+	allUsers: [User]
+	User(id: ID!): User
+	currentUser: User
+	allModels: [Model]
+	deptModels(deptId: ID!): [DeptModel]
+	allWorks: [Work]
+	curWork: Work
+	chartWorks(queryFrom: String!, from: String!, to: String): [Work]
+	dayStats(month: String!): ExecDayStat
+}
+
+type Subscription {
+	newWork: Work
+		@aws_subscribe(mutations: ["createWork","finishWork","editWork"])
+}
+
+type User {
+	id: ID!
+	name: String!
+	gqDept: String
+	isDisp: Boolean
+	workPost: String
+	workTypes: [String]
+}
+
+type Work {
+	id: ID!
+	exec: ID
+	execName: String
+	start: String
+	fin: String
+	time: Int
+	workType: String
+	workSubType: String
+	noRecent: Boolean
+	models: [Model]
+	deleted: ID
+}
+
+type WorkSubType {
+	name: String
+	time: Int
+	models: [Model]
+}
+
+type WorkType {
+	name: String
+	time: Int
+	workSubTypes: [WorkSubType]
+}
+
+schema {
+	query: Query
+	mutation: Mutation
+	subscription: Subscription
+}

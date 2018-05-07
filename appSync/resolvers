@@ -44,3 +44,18 @@
 #else
 	$util.toJson($ctx.result.items[0])
 #end
+
+_____________________________________________________________________________
+dayStats
+
+{
+    "version" : "2017-02-28",
+    "operation" : "Query",
+    "query" : {
+        "expression": "orgId = :orgId and begins_with(id, :month)",
+        "expressionValues" : {
+        	":orgId" : {"N": 1},
+            ":month" : {"S": "2018-05"}
+        }
+    }
+}
