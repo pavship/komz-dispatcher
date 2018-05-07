@@ -55,7 +55,7 @@ dayStats
         "expression": "orgId = :orgId and begins_with(id, :month)",
         "expressionValues" : {
         	":orgId" : {"N": 1},
-            ":month" : {"S": "2018-05"}
+            ":month" : {"S": "${ctx.args.month}"}
         }
     }
 }

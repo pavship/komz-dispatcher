@@ -130,7 +130,7 @@ body {
   background-color: rgba(102, 158, 214, 1) !important;
 }
 
-/*  CHART  */
+/*  DAY CHART  */
 
 .komz-dispacher-grid {
   display: grid;
@@ -138,7 +138,7 @@ body {
   grid-template-rows: 20px 40px 400px 30px;
   border: 1px solid rgba(34,36,38,.15);
   box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
-  grid-template-areas: "pad-top pad-top pad-top pad-top"
+  grid-template-areas: "pad-top-left datepicker pad-top-right pad-top-right"
                         "pad-left datepicker scale pad-right"
                         "pad-left widgets chart pad-right"
                         "pad-bot pad-bot pad-bot pad-bot";
@@ -147,7 +147,8 @@ body {
 .komz-chart-datepicker {
   grid-area: datepicker;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+  align-items: center;
 }
 
 .komz-chart-widget-list {
@@ -251,6 +252,20 @@ body {
 
 .komz-workbar-popup-list {
   margin-left: 10px !important;
+}
+
+/* MONTH CHART */
+
+.komz-disp-month-grid {
+  display: grid;
+  grid-template-columns: 20px 360px 1440px 20px;
+  grid-template-rows: 20px 40px 400px 30px;
+  border: 1px solid rgba(34,36,38,.15);
+  box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
+  grid-template-areas: "pad-top-left datepicker pad-top-right pad-top-right"
+                        "pad-left datepicker scale pad-right"
+                        "pad-left widgets chart pad-right"
+                        "pad-bot pad-bot pad-bot pad-bot";
 }
 
 /* CARD */

@@ -4,7 +4,8 @@ import MonthView from './MonthView'
 
 class Month extends Component {
   state = {
-    month: new Date(new Date().getFullYear(), new Date().getMonth(), 1)
+    month: "2018-05"
+    // month: new Date(new Date().getFullYear(), new Date().getMonth(), 1)
   }
   render() {
     return (

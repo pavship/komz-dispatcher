@@ -4,13 +4,14 @@ export const dayStats = gql`
   query dayStats ( $month: String! ) {
     dayStats ( month: $month ) {
       id
-      execName
       time
+      execName
       workTypes {
-        name
+        workType
+        workTypeClass
         time
         workSubTypes {
-          name
+          workSubType
           time
           models {
             name

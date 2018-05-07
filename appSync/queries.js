@@ -95,21 +95,31 @@ query deptModels {
     }
   }
 }
-#
-# An example mutation might look like:
-#
-#     mutation PutPost {
-#       putPost(id: 123, title: "Hello, world!") {
-#         id
-#         title
-#       }
-#     }
-#
-# Keyboard shortcuts:
-#
-#  Prettify Query:  Shift-Ctrl-P
-#
-#       Run Query:  Ctrl-Enter (or press the play button above)
-#
-#   Auto Complete:  Ctrl-Space (or just start typing)
-#
+query dayStats {
+  dayStats (
+    month: "2018-03-29T21"
+  ) {
+    id
+    time
+    execName
+    workTypes {
+      workType
+      workTypeClass
+      time
+      workSubTypes {
+        workSubType
+        time
+        models {
+          name
+          article
+          time
+          prods {
+            id
+            fullnumber
+            time
+          }
+        }
+      }
+    }
+  }
+}
