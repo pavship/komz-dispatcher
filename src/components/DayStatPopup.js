@@ -10,7 +10,7 @@ class DayStatPopup extends Component {
     return (
       <Popup
         trigger={children}
-        position='left center'
+        position='bottom right'
         flowing
         hoverable
         // verticalOffset='-100'

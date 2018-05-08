@@ -2,8 +2,6 @@ import _ from 'lodash'
 import React, { Component, Fragment } from 'react'
 import { graphql } from "react-apollo"
 
-import { dayStats } from '../graphql/statQueries'
-
 import { Segment, Card, Header, Icon } from 'semantic-ui-react'
 import DatePicker from './DatePicker'
 import ChartScale from './ChartScale'
@@ -11,45 +9,55 @@ import WorkLine from './WorkLine'
 import DayBar from './DayBar'
 import ExecCard from './ExecCard'
 
+import { wtSortRule } from '../constants'
+import { dayStats } from '../graphql/statQueries'
+
 class MonthView extends Component {
   render() {
     const { dayStats: { loading, error, dayStats } } = this.props
     if (loading) return 'Загрузка'
     if (error) return 'Ошибка'
-    const statsByExec = _(dayStats).sortBy('execName').groupBy('execName').reduce(function(result, value, key) {
+    // convert milliseconds into hours with 2 digits after dot precision
+    const msToHours = (ms) => Math.round(ms/3600000*100)/100
+    const preparedStats = dayStats.map(stat => ({
+      ...stat,
+      time: msToHours(stat.time),
+      workTypes: _.sortBy(stat.workTypes, [function(wt) { return wtSortRule.indexOf(wt.workType); }]).map(workType => ({
+        ...workType,
+        time: msToHours(workType.time),
+        workSubTypes: workType.workSubTypes.map(workSubType => ({
+          ...workSubType,
+          time: msToHours(workSubType.time),
+          models: workSubType.models.map(model => ({
+            ...model,
+            time: msToHours(model.time),
+            prods: model.prods.map(prod => ({
+              ...prod,
+              time: msToHours(prod.time)
+    })) })) })) })) }))
+    const statsByExec = _(preparedStats).sortBy('execName').groupBy('execName').reduce(function(result, value, key) {
       result.push(value)
       return result
     }, [])
-    console.log(statsByExec);
+    // console.log(statsByExec);
     return (
       <Fragment>
         <div className='komz-no-margin komz-disp-month-grid'>
           <ChartScale chartType='month'/>
           <DatePicker selectedDay={new Date(2018,4,1)} />
-          {/* <div className='komz-chart-widget-list'> */}
-          <div className='komz-month-chart-widget'>
-            {/* { widgetList.map(({ id, execName, fin, workType, workSubType, models }) => (
+          <div className='komz-chart-widget-area'>
+            { statsByExec.map(stats => {
+              const { id, execName, time } = stats[0]
+              return (
               <div className='komz-chart-widget' key={id}>
                 <Header>
                   {execName}
-                  <Header.Subheader className={fin && 'komz-red'}>
-                    {!fin
-                      ? (workSubType || workType)
-                       // show warning message if exec is not registering work now, today
-                      : (from.toDateString() === new Date().toDateString()) && 'Не регистрируется'}
+                  <Header.Subheader>
+                    {`${time}ч`}
                   </Header.Subheader>
                 </Header>
-                { (!fin) &&
-                  <Icon name='setting' loading />
-                }
-                { !fin && models &&
-                  <Header size='huge' sub floated='right' className='komz-disp-widget-model'>
-                    {models[0].name}
-                    { models[0].prods.length > 1 && ` (${models[0].prods.length}шт.)`}
-                  </Header>
-                }
               </div>
-            )) } */}
+            )}) }
           </div>
           <div className='komz-chart komz-month-chart'>
             {[...Array(31)].map((x, i) =>
@@ -58,9 +66,6 @@ class MonthView extends Component {
             {statsByExec.map((stats, i) => stats.map(stat =>
               <DayBar stat={stat} top={ i*50 } key={stat.id} />
             ))}
-            {/* <div style={{color: 'black', width: 40, height: 50, backgroundColor: 'grey', position: 'absolute', left: 80, top: i*50}}></div>
-            <div style={{color: 'black', width: 40, height: 50, backgroundColor: 'grey', position: 'absolute', left: 40}}></div>
-            <div style={{color: 'black', width: 40, height: 50, backgroundColor: 'grey', position: 'absolute', left: 80}}></div> */}
           </div>
         </div>
         <Segment className='komz-no-margin komz-disp-cards-segment' >

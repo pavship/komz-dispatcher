@@ -151,7 +151,7 @@ body {
   align-items: center;
 }
 
-.komz-chart-widget-list {
+.komz-chart-widget-area {
   grid-area: widgets;
   background-color: rgba(34,36,38,.02);
 }
@@ -269,6 +269,22 @@ body {
   background-color: rgba(102, 158, 214, 1);
 }
 
+.komz-main {
+  background-color: rgba(191, 221, 126, 1);
+}
+.komz-aux {
+  background-color:  rgba(102, 158, 214, 1);
+}
+.komz-rest {
+  background-color: rgba(247, 239, 129, 1);
+}
+.komz-negative {
+  background-color: rgba(252, 120, 113, 1);
+}
+.komz-aside {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
 .komz-workbar-popup-list {
   margin-left: 10px !important;
 }
@@ -278,14 +294,15 @@ body {
   height: 50px;
   width: 40px;
   display: flex;
-  justify-content: center;
-  align-items: baseline;
-  background-color: grey;
+  /* justify-content: center; */
+  align-items: center;
+  /* background-color: grey; */
+  flex-direction: column-reverse;
 }
 
 .komz-daybar > .komz-daybar-segment {
-  width: 35px;
-  height: 10px;
+  width: 39.5px;
+  flex: none;
 }
 
 .komz-daybar-popup {
@@ -308,13 +325,13 @@ body {
 
 /* CARD */
 .komz-disp-cards-segment {
-  padding-bottom: 1.6em !important;
+  padding-bottom: 2em !important;
 }
 
 .komz-disp-card {
   height: 420px;
   width: 260px !important;
-  margin-bottom: 0.275em !important;
+  margin-bottom: 0 !important;
 }
 
 .komz-disp-card .content:nth-child(1) {

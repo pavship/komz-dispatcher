@@ -13,11 +13,17 @@ class DayBar extends Component {
     //                       (wt === 'Отдых') ? 'rest' : 'negative'
     return (
       <DayStatPopup dayStat={stat}>
-        <div className='komz-daybar' style={{top, left}}
-          {...['main', 'aux', 'aside', 'rest'].map((x, i) =>
-            <div className={`komz-daybar-segment komz-${x}`} ></div>
+        <div className='komz-daybar' style={{top, left}}>
+          {/* // {...['main', 'aux', 'aside', 'rest'].map((x, i) =>
+          //   <div className={`komz-daybar-segment komz-${x}`} ></div>
+          // )} */}
+          { stat.workTypes.map(wt =>
+            <div className={`komz-daybar-segment komz-${wt.workTypeClass}`}
+              style={{height: Math.round(wt.time/24*48)}}
+              key={wt.workType}>
+            </div>
           )}
-        ></div>
+        </div>
       </DayStatPopup>
     )
   }

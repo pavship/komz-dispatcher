@@ -4,12 +4,14 @@ import React, { Component, Fragment } from 'react'
 import { graphql, compose } from "react-apollo"
 
 import { Segment, Card, Header, Icon } from 'semantic-ui-react'
+
 import DatePicker from './DatePicker'
 import ChartScale from './ChartScale'
 import WorkLine from './WorkLine'
 import ExecCardWithDataPrep from './ExecCardWithDataPrep'
 
-// import { allWorks } from '../graphql/workQueries'
+import { wtSortRule } from '../constants'
+
 import { chartWorks } from '../graphql/workQueries'
 import { newWork } from '../graphql/workQueries'
 
@@ -51,10 +53,8 @@ class Chart extends Component {
       const chTime = chFin ? chFin - chStart : null // chTime is Null only for live works (running within chart's time boundaries)
       const chLeft = Math.round( (chStart - from_ep)/60000 )
       // TODO prepare other workBar params and make WorkBar component stateless
-      const sortIndex = (work.workType === 'Прямые') ? 1.0 :
-                        (work.workType === 'Косвенные') ? 2.0 :
-                        (work.workType === 'Отдых') ? 3.0 :
-                        (work.workType === 'Негативные') ? 4.0 : 5.0
+      // sort Index to sort workTypes to be displayed in order according to settings placed into wtSortRule constant
+      const sortIndex = wtSortRule.indexOf(work.workType)
       return {
         early,
         late,
@@ -94,7 +94,7 @@ class Chart extends Component {
         <div className='komz-no-margin komz-dispacher-grid'>
           <ChartScale chartType='day'/>
           <DatePicker selectedDay={from} chosePeriod={chosePeriod} />
-          <div className='komz-chart-widget-list'>
+          <div className='komz-chart-widget-area'>
             { widgetList.map(({ id, execName, fin, workType, workSubType, models }) => (
               <div className='komz-chart-widget' key={id}>
                 <Header>
