@@ -110,7 +110,7 @@ class Chart extends Component {
                   <Icon name='setting' loading />
                 }
                 { !fin && models &&
-                  <Header size='huge' sub floated='right' className='komz-disp-widget-model'>
+                  <Header size='huge' sub floated='right' className='komz-flex-item-right'>
                     {models[0].name}
                     { models[0].prods.length > 1 && ` (${models[0].prods.length}шт.)`}
                   </Header>

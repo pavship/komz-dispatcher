@@ -16,7 +16,7 @@ class DayStatPopup extends Component {
         // verticalOffset='-100'
         className = 'komz-daybar-popup'
       >
-        <ExecCard dayStat={dayStat} />
+        <ExecCard dayStat={{...dayStat, execName: ''}} />
       </Popup>
     )
   }

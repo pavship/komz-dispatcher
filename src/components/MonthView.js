@@ -14,7 +14,7 @@ import { dayStats } from '../graphql/statQueries'
 
 class MonthView extends Component {
   render() {
-    const { dayStats: { loading, error, dayStats } } = this.props
+    const { dayStats: { loading, error, dayStats }, choseMonth } = this.props
     if (loading) return 'Загрузка'
     if (error) return 'Ошибка'
     // convert milliseconds into hours with 2 digits after dot precision
@@ -40,21 +40,69 @@ class MonthView extends Component {
       return result
     }, [])
     // console.log(statsByExec);
+    const aggregateTime = (stats) => Math.round(stats.reduce((sum, stat) => sum += stat.time, 0)*100)/100
+    // following function returns lodash object for chaining
+    const aggregateAndGroupItems = (xs, key, gKey) => _(xs.reduce((rv, x) => [...rv, ...x[key]], [])).groupBy(gKey || key)
+    const monthStats = statsByExec.map(stats => ({
+      execName: stats[0].execName,
+      time: aggregateTime(stats),
+      workTypes: aggregateAndGroupItems(stats, 'workTypes', 'workType').reduce(
+        function(workTypes, stats, workType) {
+          workTypes.push({
+            workType,
+            time: aggregateTime(stats),
+            workTypeClass: stats[0].workTypeClass,
+            workSubTypes: aggregateAndGroupItems(stats, 'workSubTypes', 'workSubType').reduce(
+              function(workSubTypes, stats, workSubType) {
+                workSubTypes.push({
+                  workSubType,
+                  time: aggregateTime(stats),
+                  models: aggregateAndGroupItems(stats, 'models', 'article').reduce(
+                    function(models, stats, article) {
+                      models.push({
+                        name: stats[0].name,
+                        article,
+                        time: aggregateTime(stats),
+                        prods: aggregateAndGroupItems(stats, 'prods', 'id').reduce(
+                          function(prods, stats, id) {
+                            prods.push({
+                              id,
+                              fullnumber: stats[0].fullnumber,
+                              time: aggregateTime(stats),
+                            })
+                            return prods
+                          }, []
+                        )
+                      })
+                      return models
+                    }, []
+                  )
+                })
+                return workSubTypes
+              }, []
+            )
+          })
+          return workTypes
+        }, []
+      )
+    }))
+    // console.log(monthStats)
     return (
       <Fragment>
         <div className='komz-no-margin komz-disp-month-grid'>
           <ChartScale chartType='month'/>
-          <DatePicker selectedDay={new Date(2018,4,1)} />
+          <DatePicker selectedDay={new Date(2018,4,1)} chosePeriod={choseMonth} />
           <div className='komz-chart-widget-area'>
-            { statsByExec.map(stats => {
-              const { id, execName, time } = stats[0]
+            { monthStats.map((stat, i) => {
+              const { execName, time } = stat
               return (
-              <div className='komz-chart-widget' key={id}>
-                <Header>
+              <div className='komz-chart-widget komz-month-chart-widget' key={execName}>
+                <Header className='komz-flex-item-right' style={{width: 200}}>
                   {execName}
-                  <Header.Subheader>
+                  <Header.Subheader className='komz-float-right'>
                     {`${time}ч`}
                   </Header.Subheader>
+                  <div style={{height: 10, borderBottom: '1px solid grey', width:1455}}></div>
                 </Header>
               </div>
             )}) }
@@ -70,7 +118,7 @@ class MonthView extends Component {
         </div>
         <Segment className='komz-no-margin komz-disp-cards-segment' >
           <Card.Group>
-            {/* { cardWorksPerExec.map((works, i) => <ExecCard works={works} key={i}/>) } */}
+            { monthStats.map((stat) => <ExecCard dayStat={stat} key={stat.execName}/>) }
           </Card.Group>
         </Segment>
       </Fragment>

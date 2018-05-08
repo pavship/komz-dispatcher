@@ -154,6 +154,7 @@ body {
 .komz-chart-widget-area {
   grid-area: widgets;
   background-color: rgba(34,36,38,.02);
+  position: relative;
 }
 
 .komz-chart-widget {
@@ -161,7 +162,11 @@ body {
   height: 50px;
 }
 
-.komz-disp-widget-model {
+.komz-month-chart-widget {
+  align-items: flex-end;
+}
+
+.komz-flex-item-right {
   margin-left: auto !important;
   margin-right: 15px !important;
 }
