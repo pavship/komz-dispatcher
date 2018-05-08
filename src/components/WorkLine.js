@@ -6,7 +6,7 @@ class WorkLine extends Component {
   render() {
     const { execWorks, chartFrom } = this.props
     return (
-      <div className='komz-chart-section1' >
+      <div className='komz-chart-column1' >
         {execWorks.map((works, i) => {
           const top = 50*i
           return works.map((work) => (

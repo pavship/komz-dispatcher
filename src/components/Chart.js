@@ -7,7 +7,7 @@ import { Segment, Card, Header, Icon } from 'semantic-ui-react'
 import DatePicker from './DatePicker'
 import ChartScale from './ChartScale'
 import WorkLine from './WorkLine'
-import ExecCard from './ExecCard'
+import ExecCardWithDataPrep from './ExecCardWithDataPrep'
 
 // import { allWorks } from '../graphql/workQueries'
 import { chartWorks } from '../graphql/workQueries'
@@ -92,7 +92,7 @@ class Chart extends Component {
     return (
       <Fragment>
         <div className='komz-no-margin komz-dispacher-grid'>
-          <ChartScale />
+          <ChartScale chartType='day'/>
           <DatePicker selectedDay={from} chosePeriod={chosePeriod} />
           <div className='komz-chart-widget-list'>
             { widgetList.map(({ id, execName, fin, workType, workSubType, models }) => (
@@ -118,16 +118,16 @@ class Chart extends Component {
               </div>
             )) }
           </div>
-          <div className='komz-chart'>
+          <div className='komz-chart komz-day-chart'>
             <WorkLine chartFrom={from} execWorks={chartWorksPerExec} />
             {[...Array(23)].map((x, i) =>
-              <div className='komz-chart-section' key={i} />
+              <div className='komz-chart-column' key={i} />
             )}
           </div>
         </div>
         <Segment className='komz-no-margin komz-disp-cards-segment' >
           <Card.Group>
-            { cardWorksPerExec.map((works, i) => <ExecCard works={works} key={i}/>) }
+            { cardWorksPerExec.map((works, i) => <ExecCardWithDataPrep works={works} key={i}/>) }
           </Card.Group>
         </Segment>
       </Fragment>

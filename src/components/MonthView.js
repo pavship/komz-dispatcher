@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React, { Component, Fragment } from 'react'
 import { graphql } from "react-apollo"
 
@@ -7,6 +8,7 @@ import { Segment, Card, Header, Icon } from 'semantic-ui-react'
 import DatePicker from './DatePicker'
 import ChartScale from './ChartScale'
 import WorkLine from './WorkLine'
+import DayBar from './DayBar'
 import ExecCard from './ExecCard'
 
 class MonthView extends Component {
@@ -14,12 +16,15 @@ class MonthView extends Component {
     const { dayStats: { loading, error, dayStats } } = this.props
     if (loading) return 'Загрузка'
     if (error) return 'Ошибка'
-    const preparedStats = dayStats.map(stat => stat.id)
+    const statsByExec = _(dayStats).sortBy('execName').groupBy('execName').reduce(function(result, value, key) {
+      result.push(value)
+      return result
+    }, [])
+    console.log(statsByExec);
     return (
       <Fragment>
-        {/* <div className='komz-no-margin komz-dispacher-grid'> */}
         <div className='komz-no-margin komz-disp-month-grid'>
-          <ChartScale />
+          <ChartScale chartType='month'/>
           <DatePicker selectedDay={new Date(2018,4,1)} />
           {/* <div className='komz-chart-widget-list'> */}
           <div className='komz-month-chart-widget'>
@@ -46,12 +51,16 @@ class MonthView extends Component {
               </div>
             )) } */}
           </div>
-          {/* <div className='komz-chart'> */}
-          <div className='komz-month-chart'>
-            {/* <WorkLine chartFrom={from} execWorks={chartWorksPerExec} />
-            {[...Array(23)].map((x, i) =>
-              <div className='komz-chart-section' key={i} />
-            )} */}
+          <div className='komz-chart komz-month-chart'>
+            {[...Array(31)].map((x, i) =>
+              <div className='komz-chart-column' key={`column-${i}`} />
+            )}
+            {statsByExec.map((stats, i) => stats.map(stat =>
+              <DayBar stat={stat} top={ i*50 } key={stat.id} />
+            ))}
+            {/* <div style={{color: 'black', width: 40, height: 50, backgroundColor: 'grey', position: 'absolute', left: 80, top: i*50}}></div>
+            <div style={{color: 'black', width: 40, height: 50, backgroundColor: 'grey', position: 'absolute', left: 40}}></div>
+            <div style={{color: 'black', width: 40, height: 50, backgroundColor: 'grey', position: 'absolute', left: 80}}></div> */}
           </div>
         </div>
         <Segment className='komz-no-margin komz-disp-cards-segment' >

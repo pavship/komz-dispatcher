@@ -135,7 +135,7 @@ body {
 .komz-dispacher-grid {
   display: grid;
   grid-template-columns: 20px 360px 1440px 20px;
-  grid-template-rows: 20px 40px 400px 30px;
+  grid-template-rows: 10px 40px 400px 30px;
   border: 1px solid rgba(34,36,38,.15);
   box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
   grid-template-areas: "pad-top-left datepicker pad-top-right pad-top-right"
@@ -169,14 +169,28 @@ body {
 .komz-scale {
   grid-area: scale;
   display: grid;
-  grid-template-columns: repeat(24, 1fr);
   grid-template-rows: 0.4fr 0.6fr;
 }
 
+.komz-day-scale {
+  grid-template-columns: repeat(24, 1fr);
+}
+
+.komz-month-scale {
+  grid-template-columns: repeat(31, 1fr);
+}
+
 .komz-scale-level1 {
-  grid-column: 1 / 25;
   border-left: 1px solid rgba(34, 36, 38, 0.15);
   padding-left: 5px;
+}
+
+.komz-day-scale > .komz-scale-level1 {
+  grid-column: 1 / 25;
+}
+
+.komz-month-scale > .komz-scale-level1 {
+  grid-column: 1 / 32;
 }
 
 .komz-scale-level2 {
@@ -189,19 +203,24 @@ body {
   background-color: rgba(34,36,38,.02);
   box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
   display: grid;
-  grid-template-columns: repeat(24, 1fr);
   grid-template-rows: 1fr;
-  /* grid-template-areas:
-  "s s s s s s s s s s s s s s s s s s s s s s s s"; */
+  position: relative;
 }
 
-.komz-chart-section1 {
+.komz-day-chart {
+  grid-template-columns: repeat(24, 1fr);
+}
+
+.komz-month-chart {
+  grid-template-columns: repeat(31, 1fr);
+}
+
+.komz-chart-column1 {
   position: relative;
   border-left: 1px solid rgba(34, 36, 38, 0.15);
 }
 
-.komz-chart-section {
-  /* grid-area: s; */
+.komz-chart-column {
   border-left: 1px solid rgba(34, 36, 38, 0.15);
 }
 
@@ -254,12 +273,31 @@ body {
   margin-left: 10px !important;
 }
 
+.komz-daybar {
+  position: absolute;
+  height: 50px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  background-color: grey;
+}
+
+.komz-daybar > .komz-daybar-segment {
+  width: 35px;
+  height: 10px;
+}
+
+.komz-daybar-popup {
+  padding: 0 !important;
+}
+
 /* MONTH CHART */
 
 .komz-disp-month-grid {
   display: grid;
-  grid-template-columns: 20px 360px 1440px 20px;
-  grid-template-rows: 20px 40px 400px 30px;
+  grid-template-columns: 20px 560px 1240px 20px;
+  grid-template-rows: 10px 40px 400px 30px;
   border: 1px solid rgba(34,36,38,.15);
   box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
   grid-template-areas: "pad-top-left datepicker pad-top-right pad-top-right"
