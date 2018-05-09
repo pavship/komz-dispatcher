@@ -5,18 +5,10 @@ import DayStatPopup from './DayStatPopup'
 class DayBar extends Component {
   render() {
     const { top, stat } = this.props
-    const left = parseInt(stat.id.slice(8,10)) * 40
-    // const wt = work.workType
-    // const workTypeClass = (wt === 'Прямые') ? 'main' :
-    //                       (wt === 'Косвенные') ? 'aux' :
-    //                       (wt === 'Побочные') ? 'aside' :
-    //                       (wt === 'Отдых') ? 'rest' : 'negative'
+    const left = (new Date(Date.parse(stat.id.slice(0,24))).getDate() - 1) * 40
     return (
       <DayStatPopup dayStat={stat}>
         <div className='komz-daybar' style={{top, left}}>
-          {/* // {...['main', 'aux', 'aside', 'rest'].map((x, i) =>
-          //   <div className={`komz-daybar-segment komz-${x}`} ></div>
-          // )} */}
           { stat.workTypes.map(wt =>
             <div className={`komz-daybar-segment komz-${wt.workTypeClass}`}
               style={{height: Math.round(wt.time/24*48)}}
