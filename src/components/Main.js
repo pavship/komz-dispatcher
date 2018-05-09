@@ -25,8 +25,8 @@ class Main extends Component {
               href='https://pavship.github.io/komz-executor'>https://pavship.github.io/komz-executor</a>
             </div>
           : <Switch>
-              <Route path="/day" component={DispView} />
-              <Route path="/month" component={Month} />
+              <Route path="/day/:day?" component={DispView} />
+              <Route path="/month/:month?" component={Month} />
               <Redirect to="day" />
             </Switch>
         }

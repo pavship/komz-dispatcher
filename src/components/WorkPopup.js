@@ -4,6 +4,7 @@ import { graphql, compose } from "react-apollo"
 
 import { Popup, Accordion, List, Header, Icon, Divider, Button, Form } from 'semantic-ui-react'
 
+import { isValidDate } from '../utils'
 import { editWork } from '../graphql/workQueries'
 
 class WorkPopup extends Component {
@@ -30,8 +31,7 @@ class WorkPopup extends Component {
     const fin = this.state.fin ? new Date(this.state.fin) : null
     // date validation
     // TODO move validation to handleChange fn, add form validation
-    const isValid = (date) => date instanceof Date && !isNaN(date.valueOf())
-    if (isValid(start) && (!fin || isValid(fin))) {
+    if (isValidDate(start) && (!fin || isValidDate(fin))) {
       console.log(start, fin);
       // send request if form has no errors
       this.props.editWork({

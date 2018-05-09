@@ -1,3 +1,8 @@
+export const isValidDate = (date) => date instanceof Date && !isNaN(date.valueOf())
+export const tz = new Date().getTimezoneOffset()*60000
+export const toLocalISOString = (date) => new Date(date.getTime() - tz).toISOString()
+export const fromLocalISOString = (string) => new Date(Date.parse(string) + tz)
+
 // groupBy = (xs, key) => xs.reduce((rv, x) => {
 //     (rv[x[key]] = rv[x[key]] || []).push(x)
 //     return rv

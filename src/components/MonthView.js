@@ -14,7 +14,7 @@ import { dayStats } from '../graphql/statQueries'
 
 class MonthView extends Component {
   render() {
-    const { dayStats: { loading, error, dayStats }, choseMonth } = this.props
+    const { from, choseMonth, dayStats: { loading, error, dayStats } } = this.props
     if (loading) return 'Загрузка'
     if (error) return 'Ошибка'
     // convert milliseconds into hours with 2 digits after dot precision
@@ -91,7 +91,7 @@ class MonthView extends Component {
       <Fragment>
         <div className='komz-no-margin komz-disp-month-grid'>
           <ChartScale chartType='month'/>
-          <DatePicker selectedDay={new Date(2018,4,1)} chosePeriod={choseMonth} />
+          <DatePicker selectedDay={from} chosePeriod={choseMonth} />
           <div className='komz-chart-widget-area'>
             { monthStats.map((stat, i) => {
               const { execName, time } = stat

@@ -30,7 +30,7 @@ class Chart extends Component {
     // console.log('received props', nextProps);
   }
   render() {
-    const { from, to, chosePeriod, chartWorks: { loading, error, chartWorks } } = this.props
+    const { from, to, choseDay, chartWorks: { loading, error, chartWorks } } = this.props
     if (loading) return 'Загрузка'
     if (error) return 'Ошибка'
     // console.log(chartWorks);
@@ -93,7 +93,7 @@ class Chart extends Component {
       <Fragment>
         <div className='komz-no-margin komz-dispacher-grid'>
           <ChartScale chartType='day'/>
-          <DatePicker selectedDay={from} chosePeriod={chosePeriod} />
+          <DatePicker selectedDay={from} chosePeriod={choseDay} />
           <div className='komz-chart-widget-area'>
             { widgetList.map(({ id, execName, fin, workType, workSubType, models }) => (
               <div className='komz-chart-widget' key={id}>

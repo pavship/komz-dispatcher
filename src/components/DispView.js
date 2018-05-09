@@ -1,29 +1,25 @@
-import { DateTime } from 'luxon'
+import { withRouter } from "react-router-dom"
 import React, { Component } from 'react'
 
 import Chart from './Chart'
 
+import { isValidDate, toLocalISOString, fromLocalISOString } from '../utils'
+
 class DispView extends Component {
-  state = {
-    // query 1 day before selected day to include works that started earlier
-    queryFrom: DateTime.local().startOf('day').minus({ days: 1 }).toJSDate(),
-    from: DateTime.local().startOf('day').toJSDate(),
-    to: DateTime.local().endOf('day').toJSDate()
-  }
-  chosePeriod = (from) => {
-    const from_dt = DateTime.fromJSDate(from).startOf('day')
-    this.setState({
-      queryFrom: from_dt.minus({ days: 1 }).toJSDate(),
-      from: from_dt.toJSDate(),
-      to: from_dt.endOf('day').toJSDate()
-    })
+  choseDay = (date) => {
+    this.props.history.push(`/day/${toLocalISOString(date).slice(0,10)}`)
   }
   render() {
-    const { from, queryFrom, to } = this.state
+    const { match: { params: { day } } } = this.props
+    const d = fromLocalISOString(day)
+    const date =  isValidDate(d) ? d : new Date()
+    const from = new Date(date.setHours(0,0,0,0))
+    const to = new Date(from.getTime() + 24*3600000)
+    const queryFrom = new Date(from.getTime() - 24*3600000)
     return (
-        <Chart queryFrom={queryFrom} from={from} to={to} chosePeriod={this.chosePeriod} />
+        <Chart queryFrom={queryFrom} from={from} to={to} choseDay={this.choseDay} />
     )
   }
 }
 
-export default DispView
+export default withRouter(DispView)
