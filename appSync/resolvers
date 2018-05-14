@@ -59,3 +59,53 @@ dayStats
         }
     }
 }
+_____________________________________________________________________________
+curWork
+
+{
+    "version" : "2017-02-28",
+    "operation" : "Query",
+    "query" : {
+        "expression": "orgId = :orgId AND tag = :tag",
+        "expressionValues" : {
+            ":orgId" : { "N" : 1 },
+            ":tag" : {"S" : "current"}
+        }
+    },
+    ## "filter": {
+    ## 	"expression": "#exec = :exec",
+    ##     "expressionNames": {
+    ##     	"#exec": "exec"
+    ##     },
+    ##     "expressionValues" : {
+    ##         ":exec" : {
+    ##             "S" : "${ctx.identity.sub}"
+    ##         }
+    ##     }
+    ## },
+    "index" : "orgId-tag-index",
+    ## "scanIndexForward": false
+}
+
+#set ( $result = {} )
+#if($ctx.result.items.isEmpty())
+	#set($result = {
+    	"executor": "1"
+    })
+#else
+	#foreach( $item in $ctx.result.items )
+    	#set($result = $item)
+        #if ( $item.exec == $ctx.identity.sub )
+        	#set($result = {
+                "executor": "2.5"
+            })
+            #set( $result.executor = $item.execName )
+        #end
+    #end
+    #if( $result == {} )
+        #set($result = {
+            "executor": "3"
+        })
+    #end
+#end
+$util.toJson($ctx.result.items[0])

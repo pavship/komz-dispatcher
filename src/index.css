@@ -229,6 +229,10 @@ body {
   border-left: 1px solid rgba(34, 36, 38, 0.15);
 }
 
+.komz-chart-column-weekend {
+  background-color: rgba(0, 0, 0, 0.035)
+}
+
 .komz-workbar {
   position: absolute;
   height: 40px;

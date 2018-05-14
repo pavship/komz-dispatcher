@@ -17,6 +17,8 @@ class MonthView extends Component {
     const { from, choseMonth, dayStats: { loading, error, dayStats } } = this.props
     if (loading) return 'Загрузка'
     if (error) return 'Ошибка'
+    const year = from.getFullYear()
+    const month = from.getMonth()
     // convert milliseconds into hours with 2 digits after dot precision
     const msToHours = (ms) => Math.round(ms/3600000*100)/100
     const preparedStats = dayStats.map(stat => ({
@@ -90,7 +92,7 @@ class MonthView extends Component {
     return (
       <Fragment>
         <div className='komz-no-margin komz-disp-month-grid'>
-          <ChartScale chartType='month'/>
+          <ChartScale chartType='month' monthDate={from}/>
           <DatePicker selectedDay={from} chosePeriod={choseMonth} />
           <div className='komz-chart-widget-area'>
             { monthStats.map((stat, i) => {
@@ -108,9 +110,10 @@ class MonthView extends Component {
             )}) }
           </div>
           <div className='komz-chart komz-month-chart'>
-            {[...Array(31)].map((x, i) =>
-              <div className='komz-chart-column' key={`column-${i}`} />
-            )}
+            {[...Array(31)].map((x, i) => {
+              const weekend = [5, 6].indexOf(new Date(year, month, i).getDay()) >= 0
+              return <div className={`komz-chart-column ${weekend && 'komz-chart-column-weekend'}`} key={`column-${i}`} />
+            })}
             {statsByExec.map((stats, i) => stats.map(stat =>
               <DayBar stat={stat} top={ i*50 } key={stat.id} />
             ))}
