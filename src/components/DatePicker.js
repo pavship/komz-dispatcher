@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import React, { Component } from 'react'
+import React from 'react'
 
 import DayPickerInput from 'react-day-picker/DayPickerInput'
 import 'react-day-picker/lib/style.css'
@@ -15,7 +15,7 @@ const DatePicker = ({ selectedDay, chosePeriod }) => {
           firstDayOfWeek: 1,
           month: selectedDay
         }}
-       />
+      />
     </div>
   )
 }
