@@ -44,7 +44,7 @@ class ProdView extends Component {
       ...prod,
       cost: prod.ops.reduce((sum, op) => sum += op.cost, 0)
     }))
-    const prodsByModel = _(preparedProds2).sortBy('model.name').groupBy('model.name').reduce(function (result, value, key) {
+    const prodsByModel = _(preparedProds2).sortBy('model.name', 'ops[0].start').groupBy('model.name').reduce(function (result, value, key) {
       result.push(value)
       return result
     }, [])
@@ -97,7 +97,7 @@ class ProdView extends Component {
     // }))
     // console.log(monthStats)
     return (
-      <Fragment>
+      <div className='komz-prod-view'>
         <Button icon='window minimize' content='Свернуть все' size='tiny' labelPosition='left' floated='right'
           onClick={this.collapseAll} className='komz-prod-view-collapse-button' />
         <Accordion>
@@ -106,7 +106,7 @@ class ProdView extends Component {
             const inactive = _.includes(inactiveIndex, i)
             return <div key={model} >
               <Accordion.Title
-                active={!inactive}
+                active={inactive}
                 index={i}
                 onClick={this.handleClick}
               >
@@ -117,7 +117,7 @@ class ProdView extends Component {
                   </Label>
                 </Header>
               </Accordion.Title>
-              {!inactive &&
+              {inactive &&
                 <Accordion.Content active>
                   <Divider className='komz-no-margin' />
                   <List divided selection size='medium' className='komz-no-margin'>
@@ -129,7 +129,7 @@ class ProdView extends Component {
             </div>
           })}
         </Accordion>
-      </Fragment>
+      </div>
     )
   }
 }

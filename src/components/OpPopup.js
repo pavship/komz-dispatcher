@@ -2,22 +2,22 @@ import React from 'react'
 
 import { Popup, Header } from 'semantic-ui-react'
 
-const OpPopup = ({ op, children }) => (
+const OpPopup = ({ op: { workSubType, time, cost }, children }) => (
   <Popup
     trigger={children}
     position='bottom right'
     flowing
     hoverable
-    // verticalOffset='-100'
-    className='komz-daybar-popup'
+  // verticalOffset='-100'
   >
-    <Header>
-      <Header.Content>
-        {op.workSubType}
-        {/* <Header.Subheader>
-              {!work.fin && 'с '}{DateTime.fromISO(work.start).toFormat("HH':'mm")}{work.fin && ` - ${DateTime.fromISO(work.fin).toFormat("HH':'mm")}` }
-            </Header.Subheader> */}
+    <Header className='komz-oppopup-header'>
+      <Header.Content className='komz-oppopup-header-content'>
+        {workSubType}
       </Header.Content>
+      <Header.Subheader className='komz-grey komz-oppopup-subheader'>
+        {`${time}ч`}
+        <span className='komz-darkred'> {cost}₽</span>
+      </Header.Subheader>
     </Header>
   </Popup>
 )

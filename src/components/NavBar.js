@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
-import React, {Component} from 'react'
-import {Auth} from "aws-amplify"
+import React, { Component } from 'react'
+import { Auth } from "aws-amplify"
 import { Menu, Icon } from 'semantic-ui-react'
 
 export default class NavBar extends Component {
@@ -13,8 +13,9 @@ export default class NavBar extends Component {
     return (
       <Menu icon inverted className='komz-navbar' size='small'>
         <Menu.Menu>
-            <Menu.Item name='день' as={Link} to='/day' />
-            <Menu.Item name='месяц' as={Link} to='/month' />
+          <Menu.Item name='день' as={Link} to='/day' />
+          <Menu.Item name='месяц' as={Link} to='/month' />
+          <Menu.Item name='продукция' as={Link} to='/prods' />
         </Menu.Menu>
         <Menu.Menu position='right'>
           <Menu.Item name={user.name} />
