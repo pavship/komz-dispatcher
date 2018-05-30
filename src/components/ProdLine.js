@@ -16,7 +16,7 @@ class ProdLine extends Component {
           <span className='komz-darkred'> {cost}₽</span>
         </Header.Subheader>
       </Header>
-      {ops.map((op, i) => <OpBar op={op} key={i} first={i === 0} last={i === ops.length - 1} />)}
+      {ops.map((op, i) => <OpBar op={op} key={i} last={i === ops.length - 1} />)}
     </List.Item>
     )
   }

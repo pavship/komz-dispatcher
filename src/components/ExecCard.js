@@ -22,7 +22,7 @@ const ExecCard = ({ dayStat: { execName, time, workTypes } }) => {
             {workTypes.map(({ workType, time, workTypeClass, workSubTypes }, i) =>
               <List.Item key={i}>
                 <List.Header as='h4'>
-                  <Label circular empty className={`komz-wt-${workTypeClass} komz-disp-card-Label`} />
+                  <Label circular empty className={`komz-wt-${workTypeClass} komz-disp-card-bullet`} />
                   {workType}
                   <span className='komz-float-right' >{time}ч</span>
                 </List.Header>
@@ -35,7 +35,10 @@ const ExecCard = ({ dayStat: { execName, time, workTypes } }) => {
                       </List.Header>
                       <List.List>
                         {models.map(({ article, name, time, prods }) => <List.Item key={article}>
-                          <Header sub>{name}<span className='komz-float-right' >{time}</span></Header>
+                          {/* <Header sub>{name} ({prods.length}шт.)<span className='komz-float-right' >{time}</span></Header> */}
+                          <Header sub>{name} <Label color='grey' basic className='komz-disp-card-Label' content={`${prods.length}шт`} />
+                            <span className='komz-float-right' >{time}</span>
+                          </Header>
                           <List.List>
                             {prods.map(({ id, fullnumber, time }) => <List.Item key={id}>
                               {fullnumber}

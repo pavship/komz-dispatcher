@@ -1,5 +1,5 @@
 import { HashRouter as Router, Switch, Route, Redirect } from "react-router-dom"
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { graphql, compose } from "react-apollo"
 // import { Query } from 'react-apollo'
 
@@ -18,7 +18,8 @@ class Main extends Component {
     if (error) return 'Ошибка'
     return (
       <Router>
-        <div className='komz-disp-container' >
+        {/* <div className='komz-disp-container' > */}
+        <Fragment>
           <NavBar user={currentUser} />
           {!currentUser.isDisp
             ? <div>
@@ -32,7 +33,7 @@ class Main extends Component {
               <Redirect to="day" />
             </Switch>
           }
-        </div>
+        </Fragment>
       </Router>
     )
   }

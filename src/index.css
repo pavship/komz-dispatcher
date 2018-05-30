@@ -5,6 +5,8 @@ body {
   font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
   color: rgba(0, 0, 0, 0.87);
   overflow: auto;
+  min-width: 100%;
+  width: fit-content;
 }
 
 /* AWS-AMPLIFY */
@@ -68,6 +70,10 @@ body {
   margin: 0 !important;
 }
 
+.komz-gap {
+  padding-left: 15px;
+}
+
 .komz-float-right {
   float: right !important;
   margin-left: auto !important;
@@ -89,13 +95,6 @@ body {
 
 /* LAYOUT */
 
-.komz-exec-container {
-  display: block;
-  margin-left: auto!important;
-  margin-right: auto!important;
-  max-width: 320px !important;
-}
-
 .komz-disp-container {
   display: block;
   margin-left: auto!important;
@@ -105,6 +104,8 @@ body {
 
 .komz-navbar {
   margin-bottom: 0 !important;
+  width: 100%;
+  /* width: 100vw; */
 }
 
 .komz-pushable {
@@ -363,14 +364,20 @@ body {
   padding-top: 0.25em !important;
 }
 
-.komz-disp-card-Label {
+.komz-disp-card-bullet {
   margin-right: 4px !important;
 }
+
+.komz-disp-card-Label {
+  padding: 3px 5px !important;
+}
+
 
 /* PROD VIEW */
 
 .komz-prod-view {
-  min-width: 2500px;
+  min-width: 100%;
+  width: max-content;
 }
 
 .komz-prod-view-collapse-button {
@@ -418,13 +425,17 @@ body {
   box-sizing: border-box;
   cursor: pointer !important;
 }
+.komz-opbar-divider {
+  border-right: 1px solid rgba(0,0,0,.15);
+  height: 100%;
+  display: inline-block;
+}
 .komz-opbar-arrow-line {
   width: 15px;
   flex-grow: 1;
   align-self: start;
   height: 12.5px;
   border-bottom: 1px solid rgba(0,0,0,.6);
-
 }
 .komz-opbar-arrow {
   line-height: 20px;
@@ -441,16 +452,31 @@ body {
 }
 .komz-oppopup-header {
   display: flex;
+  margin-bottom: 10px !important;
 }
 .komz-oppopup-header-content {
   flex-grow: 1;
 }
 .komz-oppopup-subheader {
   width: 130px;
-  padding-left: 20px !important;
+  flex-shrink: 0;
+  padding-left: 15px !important;
   font-weight: 700 !important;
+  line-height: 1.6em !important;
 }
 .komz-oppopup-subheader>span {
   width: 60px;
   float: right;
+}
+.komz-oppopup-divider {
+  margin-bottom: 10px !important;
+}
+.komz-oppopup-sec-column {
+  width: 130px;
+  float: right;
+  padding-left: 15px;
+}
+.komz-oppopup-execname-header {
+  margin: 0 !important;
+  font-size: 1em !important;
 }

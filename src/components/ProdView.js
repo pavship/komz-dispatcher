@@ -48,7 +48,7 @@ class ProdView extends Component {
       result.push(value)
       return result
     }, [])
-    console.log(prodsByModel);
+    // console.log(prodsByModel);
     const aggregateTime = (stats) => Math.round(stats.reduce((sum, stat) => sum += stat.time, 0) * 100) / 100
     // following function returns lodash object for chaining
     const aggregateAndGroupItems = (xs, key, gKey) => _(xs.reduce((rv, x) => [...rv, ...x[key]], [])).groupBy(gKey || key)
@@ -112,9 +112,7 @@ class ProdView extends Component {
               >
                 <Icon name='dropdown' />
                 <Header size='small' as='span'>{model}
-                  <Label color='grey'>
-                    {prods.length}
-                  </Label>
+                  <Label color='grey' content={prods.length} />
                 </Header>
               </Accordion.Title>
               {inactive &&
