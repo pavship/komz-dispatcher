@@ -45,6 +45,7 @@ const client = new AWSAppSyncClient({
     type: "AMAZON_COGNITO_USER_POOLS",
     jwtToken: async () => (await Auth.currentSession()).getAccessToken().getJwtToken()
   },
+  addTypename: false,
   disableOffline: true
 })
 

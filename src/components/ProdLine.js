@@ -7,7 +7,7 @@ import OpBar from './OpBar'
 class ProdLine extends Component {
   render() {
     const { prod: { fullnumber, time, cost, ops } } = this.props
-    console.log(ops)
+    // console.log(ops)
     return (<List.Item className='komz-prod-line'>
       <Header size='small' className='komz-prod-line-header'>
         {fullnumber}
