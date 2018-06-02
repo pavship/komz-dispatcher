@@ -139,8 +139,8 @@ export default graphql(
   allProds,
   {
     name: 'allProds',
-    options: {
+    options: () => ({
       fetchPolicy: 'cache-and-network',
-    }
+    })
   }
 )(ProdView)

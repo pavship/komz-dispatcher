@@ -5,7 +5,7 @@ import appSyncConfig from "./AppSync"
 import { ApolloProvider } from "react-apollo"
 import AWSAppSyncClient from "aws-appsync"
 import { Rehydrated } from "aws-appsync-react"
-import Amplify, {I18n, Auth} from "aws-amplify"
+import Amplify, { I18n, Auth } from "aws-amplify"
 import { withAuthenticator } from "aws-amplify-react"
 
 const App = () => {
@@ -45,7 +45,7 @@ const client = new AWSAppSyncClient({
     type: "AMAZON_COGNITO_USER_POOLS",
     jwtToken: async () => (await Auth.currentSession()).getAccessToken().getJwtToken()
   },
-  addTypename: false,
+  // addTypename: false,
   disableOffline: true
 })
 
@@ -57,6 +57,6 @@ const WithProvider = () => (
   </ApolloProvider>
 )
 
-export default withAuthenticator(WithProvider, false )
+export default withAuthenticator(WithProvider, false)
 
 // export default App;

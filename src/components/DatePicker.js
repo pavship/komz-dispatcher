@@ -1,11 +1,12 @@
-import { DateTime } from 'luxon'
 import React from 'react'
 
 import DayPickerInput from 'react-day-picker/DayPickerInput'
 import 'react-day-picker/lib/style.css'
 
+import { toLocalISOString } from '../utils'
+
 const DatePicker = ({ selectedDay, chosePeriod }) => {
-  const placeholder = DateTime.fromJSDate(selectedDay).toISO().slice(0, 10)
+  const placeholder = toLocalISOString(selectedDay).slice(0, 10)
   return (
     <div className='komz-chart-datepicker'>
       <DayPickerInput

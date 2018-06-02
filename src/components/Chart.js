@@ -140,9 +140,9 @@ export default compose(
     chartWorks,
     {
       name: 'chartWorks',
-      options: {
+      options: () => ({
         fetchPolicy: 'cache-and-network',
-      },
+      }),
       props: ({ chartWorks, ownProps }) => {
         return {
           chartWorks: chartWorks,

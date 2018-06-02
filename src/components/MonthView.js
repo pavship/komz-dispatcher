@@ -137,8 +137,8 @@ export default graphql(
   dayStats,
   {
     name: 'dayStats',
-    options: {
+    options: () => ({
       fetchPolicy: 'cache-and-network',
-    }
+    })
   }
 )(MonthView)

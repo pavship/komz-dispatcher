@@ -49,9 +49,9 @@ export default compose(
       //   loading: data.loading
       // }),
       name: 'currentUser',
-      options: {
+      options: () => ({
         fetchPolicy: 'cache-and-network',
-      }
+      })
     }
   ),
 )(Main);
