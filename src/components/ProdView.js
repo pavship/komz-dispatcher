@@ -1,8 +1,8 @@
 import _ from 'lodash'
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { graphql } from "react-apollo"
 
-import { Header, Accordion, Icon, Label, List, Divider, Button, Segment } from 'semantic-ui-react'
+import { Accordion, List, Divider, Button } from 'semantic-ui-react'
 import ProdLine from './ProdLine'
 import ModelLine from './ModelLine'
 
@@ -110,12 +110,12 @@ class ProdView extends Component {
           {prodsByModel.map((prods, i) => {
             const id = prods[0].id.split('-')[0]
             const active = _.includes(activeIndex, id)
-            const model = { 
+            const model = {
               ...prods[0].model,
               id,
               active,
               qty: prods.length
-             }
+            }
             return <div key={id} >
               <ModelLine {...model} onClick={this.handleModelLineClick} />
               {active &&

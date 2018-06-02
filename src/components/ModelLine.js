@@ -4,6 +4,8 @@ import styled from 'styled-components'
 
 import { Accordion, Label, Icon, Segment } from 'semantic-ui-react'
 
+import ModelSettings from './ModelSettings'
+
 const MLine = styled(Accordion.Title)`
   display: flex;
   align-items: center;
@@ -61,7 +63,8 @@ const MIcon = styled(Icon)`
 const Settings = styled(Segment)`
   z-index: -1;
   margin-bottom: 0 !important;
-  ${props => props.noBorder && `
+  border-radius: 0 !important;
+  ${props => props.noborder && `
     border-bottom: none !important;
   `}
 `
@@ -88,13 +91,10 @@ class ModelLine extends Component {
           </MSubLine>
         </MLine>
         {showSettings &&
-          <Settings attached='bottom' secondary compact noBorder={active}>
-            This segment is on bottom
+          <Settings attached='bottom' secondary compact noborder={active ? 1 : 0}>
+            <ModelSettings />
           </Settings>
         }
-        {/* {showSettings && active &&
-
-        } */}
       </Fragment>
     )
   }
