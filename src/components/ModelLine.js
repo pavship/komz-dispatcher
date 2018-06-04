@@ -1,12 +1,11 @@
-import React, { Component, Fragment } from 'react'
-
 import styled from 'styled-components'
+import React, { Component, Fragment } from 'react'
 
 import { Accordion, Label, Icon, Segment } from 'semantic-ui-react'
 
 import ModelSettings from './ModelSettings'
 
-const MLine = styled(Accordion.Title)`
+const MLine = styled(Accordion.Title) `
   display: flex;
   align-items: center;
 `
@@ -21,7 +20,7 @@ const MHeader = styled.span`
   font-weight: bold;
   margin-right: .5rem;
 `
-const MIcon = styled(Icon)`
+const MIcon = styled(Icon) `
   cursor: pointer;
   position: relative;
   && {
@@ -60,7 +59,7 @@ const MIcon = styled(Icon)`
     }
   `}
 `
-const Settings = styled(Segment)`
+const Settings = styled(Segment) `
   z-index: -1;
   margin-bottom: 0 !important;
   border-radius: 0 !important;
@@ -79,7 +78,7 @@ class ModelLine extends Component {
   }
   render() {
     const { showSettings } = this.state
-    const { name, qty, active } = this.props
+    const { name, qty, active, normatives } = this.props
     return (
       <Fragment>
         <MLine {...this.props}>
@@ -87,12 +86,12 @@ class ModelLine extends Component {
           <MSubLine>
             <MHeader>{name}</MHeader>
             <Label color='grey' content={qty} />
-            <MIcon name='setting' size='large' onClick={this.toggleSettings} active={showSettings ? 1 : 0}/>
+            <MIcon name='setting' size='large' onClick={this.toggleSettings} active={showSettings ? 1 : 0} />
           </MSubLine>
         </MLine>
         {showSettings &&
           <Settings attached='bottom' secondary compact noborder={active ? 1 : 0}>
-            <ModelSettings />
+            <ModelSettings normatives={normatives} />
           </Settings>
         }
       </Fragment>

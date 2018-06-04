@@ -8,9 +8,11 @@ import { Rehydrated } from "aws-appsync-react"
 import Amplify, { I18n, Auth } from "aws-amplify"
 import { withAuthenticator } from "aws-amplify-react"
 
-const App = () => {
+const App = ({ client }) => {
   // client.cache.reset()
   // client.resetStore()
+  // console.log(client);
+
   return (
     <Fragment>
       <Main />
@@ -38,25 +40,33 @@ Amplify.configure({
   }
 });
 
-const client = new AWSAppSyncClient({
+// Apollo - AppSync client
+const config = {
   url: appSyncConfig.graphqlEndpoint,
   region: 'eu-west-1',
   auth: {
     type: "AMAZON_COGNITO_USER_POOLS",
     jwtToken: async () => (await Auth.currentSession()).getAccessToken().getJwtToken()
-  },
-  // addTypename: false,
-  disableOffline: true
-})
+  }
+}
+// addTypename: false,
+// disableOffline: true,
+const options = {
+  defaultOptions: {
+    query: {
+      // fetchPolicy: 'cache-and-network',
+      fetchPolicy: 'cache-only',
+    }
+  }
+}
+const client = new AWSAppSyncClient(config, options)
 
 const WithProvider = () => (
   <ApolloProvider client={client}>
     <Rehydrated>
-      <App />
+      <App client={client} />
     </Rehydrated>
   </ApolloProvider>
 )
 
 export default withAuthenticator(WithProvider, false)
-
-// export default App;

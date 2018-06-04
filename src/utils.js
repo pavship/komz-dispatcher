@@ -1,7 +1,15 @@
 export const isValidDate = (date) => date instanceof Date && !isNaN(date.valueOf())
-export const tz = new Date().getTimezoneOffset()*60000
+export const tz = new Date().getTimezoneOffset() * 60000
 export const toLocalISOString = (date) => new Date(date.getTime() - tz).toISOString()
 export const fromLocalISOString = (string) => new Date(Date.parse(string) + tz)
+// util to split array into chunks
+export const toChunks = (arr, size) => {
+    let chunks = []
+    for (let i = 0; i < arr.length; i += size) {
+        chunks.push(arr.slice(i, i + size))
+    }
+    return chunks
+}
 
 // groupBy = (xs, key) => xs.reduce((rv, x) => {
 //     (rv[x[key]] = rv[x[key]] || []).push(x)

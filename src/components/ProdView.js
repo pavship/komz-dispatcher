@@ -1,13 +1,15 @@
 import _ from 'lodash'
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { graphql } from "react-apollo"
 
 import { Accordion, List, Divider, Button } from 'semantic-ui-react'
 import ProdLine from './ProdLine'
 import ModelLine from './ModelLine'
 
-import { wstPrices } from '../constants'
 import { allProds } from '../graphql/prodQueries'
+
+import { wstPrices } from '../constants'
+import { normatives } from '../constants'
 
 class ProdView extends Component {
   state = { activeIndex: [] }
@@ -16,7 +18,6 @@ class ProdView extends Component {
     const { activeIndex } = this.state
     const newIndex = _.includes(activeIndex, id) ? _.without(activeIndex, id) : [...activeIndex, id]
     this.setState({ activeIndex: newIndex })
-    console.log(id)
   }
   collapseAll = () => {
     const length = _.uniqBy(this.props.allProds.allProds, 'model.name').length
@@ -114,9 +115,10 @@ class ProdView extends Component {
               ...prods[0].model,
               id,
               active,
-              qty: prods.length
+              qty: prods.length,
+              normatives: normatives.find(m => m.id === id).workSubTypes
             }
-            return <div key={id} >
+            return <Fragment key={id} >
               <ModelLine {...model} onClick={this.handleModelLineClick} />
               {active &&
                 <Accordion.Content active>
@@ -127,7 +129,7 @@ class ProdView extends Component {
                   <Divider className='komz-no-margin' />
                 </Accordion.Content>
               }
-            </div>
+            </Fragment>
           })}
         </Accordion>
       </div>
@@ -139,8 +141,9 @@ export default graphql(
   allProds,
   {
     name: 'allProds',
-    options: () => ({
-      fetchPolicy: 'cache-and-network',
-    })
+    // options: () => ({
+    //   fetchPolicy: 'cache-and-network',
+    //   // fetchPolicy: 'cache-only',
+    // })
   }
 )(ProdView)
