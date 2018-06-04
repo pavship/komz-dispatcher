@@ -54,8 +54,8 @@ const config = {
 const options = {
   defaultOptions: {
     query: {
-      // fetchPolicy: 'cache-and-network',
-      fetchPolicy: 'cache-only',
+      fetchPolicy: 'cache-and-network',
+      // fetchPolicy: 'cache-only',
     }
   }
 }
