@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import React, { Component, Fragment } from 'react'
 
-import { Card, List, Header, Label } from 'semantic-ui-react'
+import { Card, List, Header, Label, Icon } from 'semantic-ui-react'
 
 import { normatives } from '../constants'
 
@@ -116,6 +116,9 @@ const ProdQtyLabel = styled(Label) `
   margin-right: 15px !important;
   padding: 3px 5px !important;
 `
+const Caret = styled(Icon) `
+  transform: ${props => !props.active && 'translateX(-3px) translateY(3px) rotate(-90deg) !important'};
+`
 
 class ExecCard2 extends Component {
   state = {
@@ -183,6 +186,7 @@ class ExecCard2 extends Component {
                   {models.map(({ article, name, time, nTime, cost, prods }) => <Fragment key={article}>
                     <ECModel name={name} onClick={() => this.handleModelLineClick(name)}>
                       <Td>
+                        <Caret name='dropdown' active={activeIndex.includes(name) ? 1 : 0} />
                         {name} <ProdQtyLabel color='grey' basic content={`${prods.length}шт`} />
                       </Td>
                       <Td>{time}ч</Td>
