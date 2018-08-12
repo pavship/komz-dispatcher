@@ -111,12 +111,13 @@ class ProdView extends Component {
           {prodsByModel.map((prods, i) => {
             const id = prods[0].id.split('-')[0]
             const active = _.includes(activeIndex, id)
+            const modelNorms = normatives.find(m => m.id === id)
             const model = {
               ...prods[0].model,
               id,
               active,
               qty: prods.length,
-              normatives: normatives.find(m => m.id === id).workSubTypes
+              normatives: modelNorms && modelNorms.workSubTypes
             }
             return <Fragment key={id} >
               <ModelLine {...model} onClick={this.handleModelLineClick} />
@@ -141,9 +142,5 @@ export default graphql(
   allProds,
   {
     name: 'allProds',
-    // options: () => ({
-    //   fetchPolicy: 'cache-and-network',
-    //   // fetchPolicy: 'cache-only',
-    // })
   }
 )(ProdView)
