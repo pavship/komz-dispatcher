@@ -197,6 +197,20 @@ apollo-cache-inmemory@^1.0.0:
     apollo-utilities "^1.0.11"
     graphql-anywhere "^4.1.8"
 
+apollo-cache-inmemory@^1.2.7:
+  version "1.2.7"
+  resolved "https://registry.yarnpkg.com/apollo-cache-inmemory/-/apollo-cache-inmemory-1.2.7.tgz#80517c4b5e910022ab8d318f47d9364f99db8541"
+  dependencies:
+    apollo-cache "^1.1.14"
+    apollo-utilities "^1.0.18"
+    graphql-anywhere "^4.1.16"
+
+apollo-cache@^1.1.14:
+  version "1.1.14"
+  resolved "https://registry.yarnpkg.com/apollo-cache/-/apollo-cache-1.1.14.tgz#c7d54cdbc7f544161f78fa5e4bae56650e22f7ad"
+  dependencies:
+    apollo-utilities "^1.0.18"
+
 apollo-cache@^1.1.5, apollo-cache@^1.1.7:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/apollo-cache/-/apollo-cache-1.1.7.tgz#5817018a2fbfc05a21ba319bd17a3e7538110cc5"
@@ -277,6 +291,12 @@ apollo-utilities@^1.0.0, apollo-utilities@^1.0.11, apollo-utilities@^1.0.9:
 apollo-utilities@^1.0.13:
   version "1.0.13"
   resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.0.13.tgz#793c858bb42243f7254d3c2961c64a7158e51022"
+
+apollo-utilities@^1.0.18:
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.0.18.tgz#e4ee91534283fde2b744a26caaea120fe6a94f67"
+  dependencies:
+    fast-json-stable-stringify "^2.0.0"
 
 append-transform@^0.4.0:
   version "0.4.0"
@@ -3309,6 +3329,12 @@ got@^6.7.1:
 graceful-fs@4.1.11, graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.1.9:
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
+
+graphql-anywhere@^4.1.16:
+  version "4.1.16"
+  resolved "https://registry.yarnpkg.com/graphql-anywhere/-/graphql-anywhere-4.1.16.tgz#82bb59643e30183cfb7b485ed4262a7b39d8a6c1"
+  dependencies:
+    apollo-utilities "^1.0.18"
 
 graphql-anywhere@^4.1.8:
   version "4.1.8"

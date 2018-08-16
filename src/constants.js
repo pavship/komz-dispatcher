@@ -60,25 +60,22 @@ export const normatives = [
         ]
     }
     ,
-    // {
-    //     "id": "cjcgf5o7m6zwt014904pvbi46",
-    //     "name": "Втулка VD 26/20",
-    //     "workSubTypes": [
-    //         {
-    //             "name": "Токарная обработка/Наладка",
-    //             "normative": 1
-    //         },
-    //         {
-    //             "name": "Фрезерная обработка/Наладка",
-    //             "normative": 1
-    //         },
-    //         {
-    //             "name": "Хонингование/Наладка",
-    //             "normative": 6.62273
-    //         }
-    //     ]
-    // }
-    // ,
+    {
+        "id": "cjdpv0ldd1s9q0132wveb09f3",
+        "name": "Втулка VD 26/20",
+        "workSubTypes": [
+            {
+                "name": "Токарная обработка/Наладка",
+            },
+            {
+                "name": "Фрезерная обработка/Наладка",
+            },
+            {
+                "name": "Хонингование/Наладка",
+            }
+        ]
+    }
+    ,
     {
         "id": "cjcgf81nw7cax0193uz52d106",
         "name": "Втулка Г60",
@@ -145,6 +142,27 @@ export const normatives = [
         "workSubTypes": [
             {
                 "name": "Фрезерная обработка/Наладка"
+            }
+        ]
+    }
+    ,
+    {
+        "id": "cjd04cphk0r8c0170gjbrbqx0",
+        "name": "Втулка 2Д100",
+        "workSubTypes": [
+            {
+                "name": "Хонингование/Наладка"
+            }
+        ]
+    }
+    ,
+    {
+        "id": "cjjtk01c811ui0114l7crsxt0",
+        "name": "Втулка 8691-130002",
+        "workSubTypes": [
+            {
+                "name": "Хонингование/Наладка",
+                "normative": 6.0
             }
         ]
     }

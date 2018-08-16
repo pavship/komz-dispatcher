@@ -1,17 +1,15 @@
 import styled from 'styled-components'
 import React, { Component, Fragment } from 'react'
 
-import { Card, List, Header, Label, Icon } from 'semantic-ui-react'
+import { Card, Label, Icon } from 'semantic-ui-react'
 
-import { normatives } from '../constants'
-
-const ECard = styled(Card) `
+const ECard = styled(Card)`
   height: 420px;
   width: 500px !important;
   margin-bottom: 0 !important;
 `
 // Card Main Sections:
-const ECardTop = styled(Card.Content) `
+const ECardTop = styled(Card.Content)`
   padding: 0 !important
 `
 const ECardHeader = styled.div`
@@ -25,7 +23,7 @@ const ECTableHeader = styled.div`
     border-top: 1px solid #d4d4d5;
     border-bottom: 1px solid #d4d4d5;
   `
-const ECardBody = styled(Card.Content) `
+const ECardBody = styled(Card.Content)`
   border: none !important;
 `
 const Table = styled.table`
@@ -90,33 +88,12 @@ const Td = styled.td`
   }
 `
 
-
-const Line = styled.div`
-  display: flex;
-`
-const Cell = styled.span`
-  flex-shrink: 0;
-`
-const Cell1 = Cell.extend`
-
-`
-const Cell2 = Cell.extend`
-  width: 70px;
-  margin-left: auto;
-`
-const Cell3 = Cell.extend`
-  width: 70px;
-`
-const Cell4 = Cell.extend`
-  width: 70px;
-  color: #570f0f;
-`
-const ProdQtyLabel = styled(Label) `
+const ProdQtyLabel = styled(Label)`
   float: right;
   margin-right: 15px !important;
   padding: 3px 5px !important;
 `
-const Caret = styled(Icon) `
+const Caret = styled(Icon)`
   transform: ${props => !props.active && 'translateX(-3px) translateY(3px) rotate(-90deg) !important'};
 `
 

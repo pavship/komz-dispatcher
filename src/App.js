@@ -3,13 +3,14 @@ import Main from './components/Main'
 
 import appSyncConfig from "./AppSync"
 import { ApolloProvider } from "react-apollo"
+import { defaultDataIdFromObject } from "apollo-cache-inmemory"
 import AWSAppSyncClient from "aws-appsync"
 import { Rehydrated } from "aws-appsync-react"
 import Amplify, { I18n, Auth } from "aws-amplify"
 import { withAuthenticator } from "aws-amplify-react"
 
 const App = ({ client }) => {
-  // client.cache.reset()
+  client.cache.reset()
   // client.resetStore()
   // console.log(client);
 
@@ -47,6 +48,14 @@ const config = {
   auth: {
     type: "AMAZON_COGNITO_USER_POOLS",
     jwtToken: async () => (await Auth.currentSession()).getAccessToken().getJwtToken()
+  },
+  cacheOptions: {
+    dataIdFromObject: object => {
+      switch (object.__typename) {
+        case 'Prod': return `Prod:${(object.id).slice(-25)}`; // Prod id from DynamoDB ProdTable is in the form of <modelId>-<prodId>. Use only prodId for Apollo cache.
+        default: return defaultDataIdFromObject(object); // fall back to default handling
+      }
+    }
   }
 }
 // addTypename: false,
@@ -54,8 +63,9 @@ const config = {
 const options = {
   defaultOptions: {
     query: {
-      fetchPolicy: 'cache-and-network',
+      // fetchPolicy: 'cache-and-network',
       // fetchPolicy: 'cache-only',
+      fetchPolicy: 'network-only',
     }
   }
 }

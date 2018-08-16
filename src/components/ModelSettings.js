@@ -2,9 +2,9 @@ import React, { Component, Fragment } from 'react'
 
 import styled from 'styled-components'
 
-import { Header, Form, Input, List, Table } from 'semantic-ui-react'
+import { Header, List } from 'semantic-ui-react'
 
-const WstLine = styled(List.Item) `
+const WstLine = styled(List.Item)`
   display: flex;
   align-items: center;
   width: 350px;

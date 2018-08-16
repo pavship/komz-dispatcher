@@ -4,6 +4,7 @@
   "homepage": "https://pavship.github.io/komz-dispatcher",
   "private": true,
   "dependencies": {
+    "apollo-cache-inmemory": "^1.2.7",
     "apollo-client": "^2.3.2",
     "aws-amplify": "^0.4.2",
     "aws-amplify-react": "^0.1.48",
